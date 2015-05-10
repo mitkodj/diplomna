@@ -638,3 +638,23 @@
        regexp: /^\/?$/i,
        method: 'get' } ],
   methods: { get: true } }
+[2015-05-10 16:28:08.617] [INFO] cheese - { path: '/',
+  stack: 
+   [ { handle: [Function],
+       name: '<anonymous>',
+       params: undefined,
+       path: undefined,
+       keys: [],
+       regexp: /^\/?$/i,
+       method: 'get' } ],
+  methods: { get: true } }
+[2015-05-10 16:28:43.951] [INFO] cheese - { path: '/',
+  stack: 
+   [ { handle: [Function],
+       name: '<anonymous>',
+       params: undefined,
+       path: undefined,
+       keys: [],
+       regexp: /^\/?$/i,
+       method: 'get' } ],
+  methods: { get: true } }

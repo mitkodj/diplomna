@@ -13,10 +13,11 @@ var users = require('../libs/users');
 
 /* GET users listing. */
 router.get('/', function(req, res) {
-  logger.info(req.route);
-  console.log(req.from);
+  // logger.info(req.route);
   // console.log(req);
   // console.log(req.Proxy-Authorization);
+  var result = users.acAlgCall("rsdvg1=1erbs", ["1=1"]);
+  console.log(result);
   res.send('respond with a resource');
 });
 

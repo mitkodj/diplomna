@@ -1,5 +1,6 @@
 var Q = require('Q');
 var connection = require('./mysql_connection')();
+var acAlg = require('./ahoCorasickAlgorithm');
 
 function getUserData(userID) {
 	var def = Q.defer();
@@ -30,7 +31,12 @@ function getUserData(userID) {
 function login(params) {
 }
 
+function SPMA(query, SML) {
+	acAlg.SPMA(query, SML);
+}
+
 module.exports = {
 	    getUserData: getUserData, 
-	    login: login
+	    login: login,
+	    acAlgCall: SPMA
 };
