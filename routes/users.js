@@ -18,7 +18,7 @@ router.get('/', function(req, res) {
   // console.log(req.Proxy-Authorization);
   var result = users.acAlgCall("rsdvg1=1erbs", ["1=1"]);
   console.log(result);
-  res.send('respond with a resource');
+  res.send(result);
 });
 
 /* GET users listing. */

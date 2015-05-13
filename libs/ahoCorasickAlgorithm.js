@@ -2,6 +2,7 @@ var Q = require('Q');
 var connection = require('./mysql_connection')();
 var _ = require('lodash');
 var machina = require('machina');
+var DFA = require('./DFA');
 
 var sqlInjFSA = new machina.Fsm( {
  
@@ -89,42 +90,57 @@ var sqlInjFSA = new machina.Fsm( {
     }
 } );
 
+var currentUser = {
+	userID: 1,
+	IP: '127.0.0.1',
+	status: 0
+};
+
 function SPMA(query, SML) {
-	sqlInjFSA.transitionState(SML[0][0]);
-	sqlInjFSA.reset();
+	// sqlInjFSA.transitionState(SML[0][0]);
+	console.log(DFA);
+	DFA.reset();
 	var j = 0;
 	for (; j < SML.length; j++) {
 		var currentQuery = query;
 		var i = currentQuery.indexOf(SML[j][0]);
 		var checkResult;
+		console.log(j,i,currentQuery,SML[j]);
 		while (i >= 0) {
 			currentQuery = currentQuery.substring(i);
+			console.log(currentQuery);
 			checkResult = ACAlg(currentQuery);
-			if (checkResult == -1) {
-				return "ccc";
+			if (checkResult > -1) {
+				currentUser.status = 1;
+				currentQuery = currentQuery.substring(checkResult);
+			} else {
+				currentQuery = currentQuery.substring(1);
 			}
-			currentQuery = currentQuery.substring(1);
 			i = currentQuery.indexOf(SML[j][0]);
 		}
 	}
-	return "hhhh";
-	// console.log(sqlInjFSA.handle("1"));
+	if (currentUser.status > 0) {
+		return "Current User has attempted SQL INjection Attack."
+	} else {
+		return "Current user is safe."
+	}
 }
 
 function ACAlg(query) {
 	var i = 0,
-		n = query.length;
+		n = query.length,
+		returnedResult = -1;
 	for (; i < n; i++) {
-		while (i < n && !(sqlInjFSA.transitionState(query.charAt(i)))) {
+		while (i < n && !(DFA.transition(query.charAt(i)))) {
 			sqlInjFSA.reset();
 			i++;
 		}
-		if (i < n) {
-			console.log('potential');
+		if (i < n && DFA.isInFinalState()) {
+			returnedResult = i;
 		}
 	}
 
-	return -1;
+	return returnedResult;
 }
 
 module.exports = {

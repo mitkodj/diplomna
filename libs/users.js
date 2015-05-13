@@ -32,7 +32,7 @@ function login(params) {
 }
 
 function SPMA(query, SML) {
-	acAlg.SPMA(query, SML);
+	return acAlg.SPMA(query, SML);
 }
 
 module.exports = {
