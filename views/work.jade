@@ -1,4 +1,5 @@
 script(type='text/javascript' src='http://code.jquery.com/jquery.min.js')
+link(rel='stylesheet', href='style.css')
 script.
 	$( document ).ready(function() {
 		console.log('We are the heroes.');
@@ -9,22 +10,44 @@ script.
 				type: "POST",
 				url: '/bank',
 				data: {iban: iban},
+				dataType : "json",
 				success: function( response ) {
-				}
+					var resultTable = document.getElementById('resultsTable');
+					
+					resultsTable.innerHTML = "<tr><th>Bank</th><th>IBAN</th><th>Withdraw</th></tr>";
+
+					console.log(response, typeof response);
+					for(var i = 0; i< response.length; i++){
+		                var tableRow = "<tr><td>" +
+		                 response[i].bankName +
+		                  "</td><td>" +
+		                   response[i].IBAN +
+		                    "</td><td>" + 
+		                   response[i].withrawal + "</td></tr>";
+		                $('#resultsTable').append(tableRow);
+		            }
+		        },
+		        error: function(err) {
+		        	console.log("ERRor");
+		       		var resultTable = document.getElementById('resultsTable');
+					
+					resultsTable.innerHTML = "<tr><th>Bank</th><th>IBAN</th><th>Withdraw</th></tr>";
+		        	alert("SQL Injection");
+		        }
 			});
-			return false;
-		});
+		} );
+		return false;
 	});
 div(name="IBANSearch", method="post")
 	input(type="text", name="iban")
 	input(type="submit", value="SEARCH")
-table
+table(id="resultsTable")
 	tr
 		th Bank
 		th IBAN
 		th Withdraw
-	each val, index in ['zero', 'one', 'two']
-		tr
-			td= val
-			td= index
-			td 1
+	//- each val, index in ['zero', 'one', 'two']
+	//- 	tr
+	//- 		td= val
+	//- 		td= index
+	//- 		td 1

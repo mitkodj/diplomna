@@ -20,3 +20,11 @@ a {
 	width: 100%;
 	margin-bottom: 10px;
 }
+
+#resultsTable {
+	background-color: red;
+}
+
+table th {
+	width: 150px;
+}

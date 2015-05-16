@@ -17,8 +17,9 @@ function getBankData(iban) {
 	console.log(query);
 
 	var result = SPMA(query, ["1=1"]);
+	console.log(result);
 
-	if (result == "Current user is safe.") {
+	if (!result) {
 		connection.query(query, function(err, rows, fields) {
 			if (err) throw err;
 

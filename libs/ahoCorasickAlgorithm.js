@@ -98,7 +98,8 @@ var currentUser = {
 
 function SPMA(query, SML) {
 	// sqlInjFSA.transitionState(SML[0][0]);
-	console.log(DFA);
+	// console.log(DFA);
+    currentUser.status = 0;
 	DFA.reset();
 	var j = 0;
 	for (; j < SML.length; j++) {
@@ -120,9 +121,9 @@ function SPMA(query, SML) {
 		}
 	}
 	if (currentUser.status > 0) {
-		return "Current User has attempted SQL INjection Attack."
+		return true;
 	} else {
-		return "Current user is safe."
+		return false;
 	}
 }
 
