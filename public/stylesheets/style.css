@@ -6,3 +6,17 @@ body {
 a {
   color: #00B7FF;
 }
+
+.spannable {
+	width:100%;
+	height:100%;
+}
+
+.loginbox {
+	width: 200px;
+}
+
+.loginbox > * {
+	width: 100%;
+	margin-bottom: 10px;
+}

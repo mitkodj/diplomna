@@ -5,25 +5,25 @@ var acAlg = require('./ahoCorasickAlgorithm');
 function getUserData(userID) {
 	var def = Q.defer();
 
-	connection.connect(function(err) {
-	  	if (err) {
-		  console.error('error connecting: ' + err.stack);
-		  return;
-		}
+	// connection.connect(function(err) {
+	//   	if (err) {
+	// 	  console.error('error connecting: ' + err.stack);
+	// 	  return;
+	// 	}
 
 		console.log('connected as id ' + connection.threadId);
 
 		var query = "SELECT * FROM diplomna_rabota.client_status";
 		// var query = "SELECT 1";
 
+  		var result = users.acAlgCall(query, ["1=1"]);
 
 		connection.query(query, function(err, rows, fields) {
 			if (err) throw err;
 
-			console.log('The solution is: ', rows);
 			def.resolve(rows);
 		});
-	});
+	// });
 
 	return def.promise;
 }
