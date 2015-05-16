@@ -1,22 +1,9 @@
-//- extends layout
-
-//- block content
-//- 	p.
-//- 		Welcome to our sample SQL injection protection system.
-//- 	div.verticalAlignment
-//- 		input
-//- 		input
-//- 		button(class="btn", data-action="bea").
-//- 			Log In
-//- - var user = { name: 'John' }
+- var user = {name: 'mitko', Twitter: 'mmmeee', blog: 'michurin'}
 if user
-  div.loginbox
-    // Filtered inline output
-    p.
-      Welcome, #{user.name}
+	include ./work.jade
 else
-  div(class="loginbox")
-    form(name="login", action="/users", method="post")
-      input(type="text", name="user")
-      input(type="password", name="pass")
-      input(type="submit", value="Log in")
+	div(class="loginbox")
+		form(name="login", action="/users", method="post")
+			input(type="text", name="user")
+			input(type="password", name="pass")
+			input(type="submit", value="Log in")

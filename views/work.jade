@@ -1,0 +1,29 @@
+script(type='text/javascript' src='http://code.jquery.com/jquery.min.js')
+script.
+	$( document ).ready(function() {
+		console.log('We are the heroes.');
+		$("input[type=submit]").click( function() {
+			console.log('aaaa');
+			$.ajax( {
+				type: "POST",
+				url: '/bank',
+				data: {iban: $("input[name=iban]").value},
+				success: function( response ) {
+				}
+			});
+			return false;
+		});
+	});
+div(name="IBANSearch", method="post")
+	input(type="text", name="iban")
+	input(type="submit", value="SEARCH")
+table
+	tr
+		th Bank
+		th IBAN
+		th Withdraw
+	each val, index in ['zero', 'one', 'two']
+		tr
+			td= val
+			td= index
+			td 1

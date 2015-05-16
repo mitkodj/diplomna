@@ -2,7 +2,7 @@ var Q = require('Q');
 var connection = require('./mysql_connection')();
 var acAlg = require('./ahoCorasickAlgorithm');
 
-function getUserData(userID) {
+function getUserData(username, password) {
 	var def = Q.defer();
 
 	// connection.connect(function(err) {
@@ -13,10 +13,15 @@ function getUserData(userID) {
 
 		console.log('connected as id ' + connection.threadId);
 
-		var query = "SELECT * FROM diplomna_rabota.client_status";
+		var query = ["SELECT *",
+		"FROM diplomna_rabota.user_data",
+		"WHERE username='" + username + "'",
+		"AND password='" + password + "'"
+		].join(' ');
 		// var query = "SELECT 1";
+		console.log(query);
 
-  		var result = users.acAlgCall(query, ["1=1"]);
+  		var result = SPMA(query, ["1=1"]);
 
 		connection.query(query, function(err, rows, fields) {
 			if (err) throw err;
@@ -28,15 +33,11 @@ function getUserData(userID) {
 	return def.promise;
 }
 
-function login(params) {
-}
-
 function SPMA(query, SML) {
 	return acAlg.SPMA(query, SML);
 }
 
 module.exports = {
-	    getUserData: getUserData, 
-	    login: login,
+	    getUserData: getUserData,
 	    acAlgCall: SPMA
 };
