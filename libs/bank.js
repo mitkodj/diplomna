@@ -16,15 +16,23 @@ function getBankData(iban) {
 	// var query = "SELECT 1";
 	console.log(query);
 
-		// var result = SPMA(query, ["1=1"]);
+	var result = SPMA(query, ["1=1"]);
 
-	connection.query(query, function(err, rows, fields) {
-		if (err) throw err;
+	if (result == "Current user is safe.") {
+		connection.query(query, function(err, rows, fields) {
+			if (err) throw err;
 
-		def.resolve(rows);
-	});
+			def.resolve(rows);
+		});	
+	} else {
+		def.resolve("Attempted SQL Injection.")
+	}
 
 	return def.promise;
+}
+
+function SPMA(query, SML) {
+	return acAlg.SPMA(query, SML);
 }
 
 module.exports = {

@@ -3,11 +3,12 @@ script.
 	$( document ).ready(function() {
 		console.log('We are the heroes.');
 		$("input[type=submit]").click( function() {
-			console.log('aaaa');
+			//- console.log($("input[name=iban]").value);
+			var iban = document.getElementsByName('iban')[0].value;
 			$.ajax( {
 				type: "POST",
 				url: '/bank',
-				data: {iban: $("input[name=iban]").value},
+				data: {iban: iban},
 				success: function( response ) {
 				}
 			});
