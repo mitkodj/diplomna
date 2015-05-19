@@ -21,8 +21,8 @@ a {
 	margin-bottom: 10px;
 }
 
-#resultsTable {
-	background-color: red;
+#resultsTable th {
+	background-color: yellow;
 }
 
 table th {

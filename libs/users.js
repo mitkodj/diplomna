@@ -13,18 +13,20 @@ function getUserData(username, password) {
 
 		console.log('connected as id ' + connection.threadId);
 
-		var query = ["SELECT *",
-		"FROM diplomna_rabota.user_data",
+		var query = ["SELECT UD.*, CS.IP, CS.rating",
+		"FROM diplomna_rabota.user_data UD",
+		"LEFT JOIN diplomna_rabota.client_status CS",
+		"ON UD.Id = CS.distinctKey",
 		"WHERE username='" + username + "'",
 		"AND password='" + password + "'"
 		].join(' ');
-		// var query = "SELECT 1";
-		console.log(query);
 
+		console.log(this.currentUser);
+		acAlg.currentUser = this.currentUser;
   		var result = SPMA(query, ["1=1"]);
 
 		connection.query(query, function(err, rows, fields) {
-			if (err) throw err;
+			if (err) def.reject(err);
 
 			def.resolve(rows);
 		});
@@ -33,11 +35,34 @@ function getUserData(username, password) {
 	return def.promise;
 }
 
+function saveUserIP(user) {
+	console.log("in saveUserIP", user);
+	var query = ["INSERT INTO",
+		"diplomna_rabota.client_status(distinctKey, rating, IP)",
+		"VALUES(",
+		user.Id + ", ",
+		user.rating + ", '",
+		user.IP + "') ",
+		"ON DUPLICATE KEY UPDATE",   
+		"rating=" + user.rating
+		].join(' ');
+		console.log(query);
+
+		connection.query(query, function(err, rows, fields) {
+			if (err) throw err;
+
+			console.log(rows);
+		});
+}
+
 function SPMA(query, SML) {
+	console.log(this.currentUser);
+	acAlg.currentUser = this.currentUser;
 	return acAlg.SPMA(query, SML);
 }
 
 module.exports = {
 	    getUserData: getUserData,
-	    acAlgCall: SPMA
+	    acAlgCall: SPMA,
+	    saveUserIP: saveUserIP
 };

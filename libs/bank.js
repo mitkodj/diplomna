@@ -18,6 +18,11 @@ function getBankData(iban) {
 
 	var result = SPMA(query, ["1=1"]);
 	console.log(result);
+	if (result) {
+		console.log("The SQL Inj");
+		this.currentUser.rating = 1;
+		console.log("The SQL Inj from ", acAlg.currentUser);
+	}
 
 	if (!result) {
 		connection.query(query, function(err, rows, fields) {

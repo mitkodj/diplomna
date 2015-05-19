@@ -97,8 +97,6 @@ var currentUser = {
 };
 
 function SPMA(query, SML) {
-	// sqlInjFSA.transitionState(SML[0][0]);
-	// console.log(DFA);
     currentUser.status = 0;
 	DFA.reset();
 	var j = 0;
