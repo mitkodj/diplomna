@@ -104,8 +104,10 @@ var sqlInjFSA = new machina.Fsm( {
     transitionState: function(newState) {
     	console.log(this.state);
 
-        if (this.handle( newState )) {
+        if (!this.handle( newState )) {
             
+        this.handle( "_reset" );
+
         }
         // this.handle( newState );
     	console.log(this.state);
