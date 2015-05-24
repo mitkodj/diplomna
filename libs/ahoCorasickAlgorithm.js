@@ -27,7 +27,16 @@ var sqlInjFSA = new machina.Fsm( {
     // handled while in that state. 
     states: {
         uninitialized: {
+            0: "f1",
             1: "f1",
+            2: "f1",
+            3: "f1",
+            4: "f1",
+            5: "f1",
+            6: "f1",
+            7: "f1",
+            8: "f1",
+            9: "f1",
             // '1': "f1",
             _reset: "uninitialized"
         },
@@ -62,7 +71,16 @@ var sqlInjFSA = new machina.Fsm( {
         	_onEnter: function() {
                 console.log(this);
             },
+            0: "f3",
             1: "f3",
+            2: "f3",
+            3: "f3",
+            4: "f3",
+            5: "f3",
+            6: "f3",
+            7: "f3",
+            8: "f3",
+            9: "f3",
         	_onEnter: function() {
                 console.log(this);
             },
@@ -70,7 +88,7 @@ var sqlInjFSA = new machina.Fsm( {
         },
         "f3": {
         	_onEnter: function() {
-                console.log(this);
+                console.log("FINAL STATE",this);
             },
             _reset: "uninitialized"
         }
@@ -85,7 +103,11 @@ var sqlInjFSA = new machina.Fsm( {
  
     transitionState: function(newState) {
     	console.log(this.state);
-        this.handle( newState );
+
+        if (this.handle( newState )) {
+            
+        }
+        // this.handle( newState );
     	console.log(this.state);
     }
 } );

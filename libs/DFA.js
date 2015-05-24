@@ -3,7 +3,25 @@ var _ = require('lodash');
 var automata = [{
 		name: 'f0',
 		transitions: [{
+			t: '0', s: 'f1'
+		},{
 			t: '1', s: 'f1'
+		},{
+			t: '2', s: 'f1'
+		},{
+			t: '3', s: 'f1'
+		},{
+			t: '4', s: 'f1'
+		},{
+			t: '5', s: 'f1'
+		},{
+			t: '6', s: 'f1'
+		},{
+			t: '7', s: 'f1'
+		},{
+			t: '8', s: 'f1'
+		},{
+			t: '9', s: 'f1'
 		}],
 		failTransition: 'f0'
 	}, {
@@ -15,7 +33,25 @@ var automata = [{
 	}, {
 		name: 'f2',
 		transitions: [{
+			t: '0', s: 'f3'
+		},{
 			t: '1', s: 'f3'
+		},{
+			t: '2', s: 'f3'
+		},{
+			t: '3', s: 'f3'
+		},{
+			t: '4', s: 'f3'
+		},{
+			t: '5', s: 'f3'
+		},{
+			t: '6', s: 'f3'
+		},{
+			t: '7', s: 'f3'
+		},{
+			t: '8', s: 'f3'
+		},{
+			t: '9', s: 'f3'
 		}],
 		failTransition: 'f0'
 	}, {
