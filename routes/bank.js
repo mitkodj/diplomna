@@ -3,16 +3,17 @@ var router = express.Router();
 var log4js = require('log4js');
 var jade = require('jade');
 
+var session = require('../libs/session');
 var banks = require('../libs/bank');
 var users = require('../libs/users');
 router.post('/', function(req, res) {
   console.log(req.body);
-  bank.getBankData(req.body.iban)
+  banks.getBankData(req.body.iban)
   .then(function(rows) {
     console.log(rows);
 
     if (rows == "Attempted SQL Injection.") {
-    	users.saveUserIP(banks.currentUser);
+    	users.saveUserIP(session.currentUser);
     }
     res.send(rows);
     // if (rows.length == 1){

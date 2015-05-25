@@ -1,6 +1,7 @@
 var Q = require('Q');
 var connection = require('./mysql_connection')();
 var acAlg = require('./ahoCorasickAlgorithm');
+var session = require('./session');
 
 function getUserData(username, password) {
 	var def = Q.defer();
@@ -21,9 +22,7 @@ function getUserData(username, password) {
 		"AND password='" + password + "'"
 		].join(' ');
 
-		console.log(this.currentUser);
-		acAlg.currentUser = this.currentUser;
-  		var result = SPMA(query, ["1=1"]);
+		console.log(query);
 
 		connection.query(query, function(err, rows, fields) {
 			if (err) def.reject(err);
@@ -56,8 +55,7 @@ function saveUserIP(user) {
 }
 
 function SPMA(query, SML) {
-	console.log(this.currentUser);
-	acAlg.currentUser = this.currentUser;
+	console.log(session.currentUser);
 	return acAlg.SPMA(query, SML);
 }
 

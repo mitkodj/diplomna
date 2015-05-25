@@ -16,17 +16,24 @@ router.post('/', function(req, res) {
   console.log(req.body);
   users.getUserData(req.body.user,req.body.pass)
   .then(function(rows) {
-    console.log(rows);
-    if (rows.length == 1){
-      if (rows[0].IP == null) {
-        console.log(rows[0]);
-        rows[0].IP = req.connection.remoteAddress;
-        rows[0].rating = 0;
-        console.log(rows[0]);
-        users.saveUserIP(rows[0]);
+    console.log('got ',rows);
+    if (rows.length > 1){
+
+      var index = -1;
+      for (var i = 0; i < rows.length; i++) {
+        if (rows[i].IP == req.connection.remoteAddress) {
+          index = i;
+        }
       }
-      users.currentUser = rows[0];
-      banks.currentUser = rows[0];
+      if (index == -1) {
+        session.currentUser = rows[0];
+        session.currentUser.IP = req.connection.remoteAddress;
+        session.currentUser.rating = 0;
+        console.log(session.currentUser);
+        users.saveUserIP(session.currentUser);
+      } else {
+        session.currentUser = rows[index];
+      }
       var htmlOutput = {
         user: {
           name: rows[0].username

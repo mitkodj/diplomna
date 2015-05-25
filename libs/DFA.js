@@ -3,230 +3,292 @@ var _ = require('lodash');
 var automata = [{
 		name: 'f0',
 		transitions: [{
-			t: 'u', s: 'f1'
-		},{
-			t: '@', s: 'f19'
-		},{
-			t: '0', s: 'f28'
-		},{
-			t: '1', s: 'f28'
-		},{
-			t: '2', s: 'f28'
-		},{
-			t: '3', s: 'f28'
-		},{
-			t: '4', s: 'f28'
-		},{
-			t: '5', s: 'f28'
-		},{
-			t: '6', s: 'f28'
-		},{
-			t: '7', s: 'f28'
-		},{
-			t: '8', s: 'f28'
-		},{
-			t: '9', s: 'f28'
+			t: ' ', s: 'f1'
 		}],
 		failTransition: 'f0'
 	},{
 		name: 'f1',
 		transitions: [{
-			t: 'n', s: 'f2'
+			t: '@', s: 'f2'
 		},{
-			t: 's', s: 'f14'
+			t: 'a', s: 'f5'
+		},{
+			t: 'b', s: 'f5'
+		},{
+			t: 'd', s: 'f5'
+		},{
+			t: 'e', s: 'f5'
+		},{
+			t: 'f', s: 'f5'
+		},{
+			t: 'i', s: 'f5'
+		},{
+			t: 'n', s: 'f5'
+		},{
+			t: 'o', s: 'f5'
+		},{
+			t: 'r', s: 'f5'
+		},{
+			t: 's', s: 'f5'
+		},{
+			t: 't', s: 'f5'
+		},{
+			t: 'v', s: 'f5'
+		},{
+			t: '0', s: 'f8'
+		},{
+			t: '1', s: 'f8'
+		},{
+			t: '2', s: 'f8'
+		},{
+			t: '3', s: 'f8'
+		},{
+			t: '4', s: 'f8'
+		},{
+			t: '5', s: 'f8'
+		},{
+			t: '6', s: 'f8'
+		},{
+			t: '7', s: 'f8'
+		},{
+			t: '8', s: 'f8'
+		},{
+			t: '9', s: 'f8'
 		}],
 		failTransition: 'f0'
 	},{
 		name: 'f2',
 		transitions: [{
-			t: 'i', s: 'f3'
+			t: '@', s: 'f3'
 		}],
 		failTransition: 'f0'
 	},{
 		name: 'f3',
 		transitions: [{
+			t: 'a', s: 'f4'
+		},{
+			t: 'b', s: 'f4'
+		},{
+			t: 'd', s: 'f4'
+		},{
+			t: 'e', s: 'f4'
+		},{
+			t: 'h', s: 'f4'
+		},{
+			t: 'i', s: 'f4'
+		},{
+			t: 'm', s: 'f4'
+		},{
+			t: 'n', s: 'f4'
+		},{
 			t: 'o', s: 'f4'
+		},{
+			t: 'r', s: 'f4'
+		},{
+			t: 's', s: 'f4'
+		},{
+			t: 't', s: 'f4'
+		},{
+			t: 'v', s: 'f4'
 		}],
 		failTransition: 'f0'
 	},{
 		name: 'f4',
 		transitions: [{
-			t: 'n', s: 'f5'
+			t: 'a', s: 'f4'
+		},{
+			t: 'b', s: 'f4'
+		},{
+			t: 'd', s: 'f4'
+		},{
+			t: 'e', s: 'f4'
+		},{
+			t: 'h', s: 'f4'
+		},{
+			t: 'i', s: 'f4'
+		},{
+			t: 'm', s: 'f4'
+		},{
+			t: 'n', s: 'f4'
+		},{
+			t: 'o', s: 'f4'
+		},{
+			t: 'r', s: 'f4'
+		},{
+			t: 's', s: 'f4'
+		},{
+			t: 't', s: 'f4'
+		},{
+			t: 'v', s: 'f4'
 		}],
 		failTransition: 'f0'
 	},{
 		name: 'f5',
 		transitions: [{
-			t: ' ', s: 'f5'
+			t: 'a', s: 'f5'
 		},{
-			t: 'a', s: 'f6'
+			t: 'b', s: 'f5'
 		},{
-			t: 's', s: 'f8'
+			t: 'd', s: 'f5'
+		},{
+			t: 'e', s: 'f5'
+		},{
+			t: 'f', s: 'f5'
+		},{
+			t: 'i', s: 'f5'
+		},{
+			t: 'n', s: 'f5'
+		},{
+			t: 'o', s: 'f5'
+		},{
+			t: 'r', s: 'f5'
+		},{
+			t: 's', s: 'f5'
+		},{
+			t: 't', s: 'f5'
+		},{
+			t: 'v', s: 'f5'
+		},{
+			t: '(', s: 'f6'
 		}],
 		failTransition: 'f0'
 	},{
 		name: 'f6',
 		transitions: [{
-			t: 'l', s: 'f7'
+			t: 'a', s: 'f6'
+		},{
+			t: 'b', s: 'f6'
+		},{
+			t: 'd', s: 'f6'
+		},{
+			t: 'e', s: 'f6'
+		},{
+			t: 'f', s: 'f6'
+		},{
+			t: 'h', s: 'f6'
+		},{
+			t: 'i', s: 'f6'
+		},{
+			t: 'n', s: 'f6'
+		},{
+			t: 'o', s: 'f6'
+		},{
+			t: 'r', s: 'f6'
+		},{
+			t: 's', s: 'f6'
+		},{
+			t: 't', s: 'f6'
+		},{
+			t: 'v', s: 'f6'
+		},{
+			t: '0', s: 'f6'
+		},{
+			t: '1', s: 'f6'
+		},{
+			t: '2', s: 'f6'
+		},{
+			t: '3', s: 'f6'
+		},{
+			t: '4', s: 'f6'
+		},{
+			t: '5', s: 'f6'
+		},{
+			t: '6', s: 'f6'
+		},{
+			t: '7', s: 'f6'
+		},{
+			t: '8', s: 'f6'
+		},{
+			t: '9', s: 'f6'
+		},{
+			t: ',', s: 'f6'
+		},{
+			t: '(', s: 'f6'
+		},{
+			t: ')', s: 'f7'
 		}],
 		failTransition: 'f0'
 	},{
 		name: 'f7',
-		transitions: [{
-			t: 'l', s: 'f5'
-		}],
+		transitions: [],
 		failTransition: 'f0'
 	},{
 		name: 'f8',
 		transitions: [{
-			t: 'e', s: 'f9'
+			t: '0', s: 'f8'
+		},{
+			t: '1', s: 'f8'
+		},{
+			t: '2', s: 'f8'
+		},{
+			t: '3', s: 'f8'
+		},{
+			t: '4', s: 'f8'
+		},{
+			t: '5', s: 'f8'
+		},{
+			t: '6', s: 'f8'
+		},{
+			t: '7', s: 'f8'
+		},{
+			t: '8', s: 'f8'
+		},{
+			t: '9', s: 'f8'
+		},{
+			t: '=', s: 'f9'
 		}],
 		failTransition: 'f0'
 	},{
 		name: 'f9',
 		transitions: [{
-			t: 'l', s: 'f10'
+			t: '0', s: 'f10'
+		},{
+			t: '1', s: 'f10'
+		},{
+			t: '2', s: 'f10'
+		},{
+			t: '3', s: 'f10'
+		},{
+			t: '4', s: 'f10'
+		},{
+			t: '5', s: 'f10'
+		},{
+			t: '6', s: 'f10'
+		},{
+			t: '7', s: 'f10'
+		},{
+			t: '8', s: 'f10'
+		},{
+			t: '9', s: 'f10'
 		}],
 		failTransition: 'f0'
 	},{
 		name: 'f10',
 		transitions: [{
-			t: 'e', s: 'f11'
-		}],
-		failTransition: 'f0'
-	},{
-		name: 'f11',
-		transitions: [{
-			t: 'c', s: 'f12'
-		}],
-		failTransition: 'f0'
-	},{
-		name: 'f12',
-		transitions: [{
-			t: 't', s: 'f3'
-		}],
-		failTransition: 'f0'
-	},{
-		name: 'f13',
-		transitions: [],
-		failTransition: 'f0'
-	},{
-		name: 'f14',
-		transitions: [{
-			t: 'e', s: 'f15'
-		}],
-		failTransition: 'f0'
-	},{
-		name: 'f15',
-		transitions: [{
-			t: 'r', s: 'f16'
-		}],
-		failTransition: 'f0'
-	},{
-		name: 'f16',
-		transitions: [{
-			t: '(', s: 'f17'
-		}],
-		failTransition: 'f0'
-	},{
-		name: 'f17',
-		transitions: [{
-			t: ')', s: 'f18'
-		}],
-		failTransition: 'f0'
-	},{
-		name: 'f18',
-		transitions: [],
-		failTransition: 'f0'
-	},{
-		name: 'f19',
-		transitions: [{
-			t: '@', s: 'f20'
-		}],
-		failTransition: 'f0'
-	},{
-		name: 'f20',
-		transitions: [{
-			t: 'v', s: 'f21'
-		}],
-		failTransition: 'f0'
-	},{
-		name: 'f21',
-		transitions: [{
-			t: 'e', s: 'f22'
-		}],
-		failTransition: 'f0'
-	},{
-		name: 'f22',
-		transitions: [{
-			t: 'r', s: 'f23'
-		}],
-		failTransition: 'f0'
-	},{
-		name: 'f23',
-		transitions: [{
-			t: 's', s: 'f24'
-		}],
-		failTransition: 'f0'
-	},{
-		name: 'f24',
-		transitions: [{
-			t: 'i', s: 'f25'
-		}],
-		failTransition: 'f0'
-	},{
-		name: 'f25',
-		transitions: [{
-			t: 'o', s: 'f26'
-		}],
-		failTransition: 'f0'
-	},{
-		name: 'f26',
-		transitions: [{
-			t: 'n', s: 'f27'
-		}],
-		failTransition: 'f0'
-	},{
-		name: 'f27',
-		transitions: [],
-		failTransition: 'f0'
-	},{
-		name: 'f28',
-		transitions: [{
-			t: '=', s: 'f29'
-		}],
-		failTransition: 'f0'
-	},{
-		name: 'f29',
-		transitions: [{
-			t: '0', s: 'f30'
+			t: '0', s: 'f10'
 		},{
-			t: '1', s: 'f30'
+			t: '1', s: 'f10'
 		},{
-			t: '2', s: 'f30'
+			t: '2', s: 'f10'
 		},{
-			t: '3', s: 'f30'
+			t: '3', s: 'f10'
 		},{
-			t: '4', s: 'f30'
+			t: '4', s: 'f10'
 		},{
-			t: '5', s: 'f30'
+			t: '5', s: 'f10'
 		},{
-			t: '6', s: 'f30'
+			t: '6', s: 'f10'
 		},{
-			t: '7', s: 'f30'
+			t: '7', s: 'f10'
 		},{
-			t: '8', s: 'f30'
+			t: '8', s: 'f10'
 		},{
-			t: '9', s: 'f30'
+			t: '9', s: 'f10'
 		}],
-		failTransition: 'f0'
-	},{
-		name: 'f30',
-		transitions: [],
 		failTransition: 'f0'
 	}];
 
-var finalStates = ['f13', 'f18', 'f27', 'f30'];
+var finalStates = ['f4', 'f7', 'f10'];
 
 var currentState = automata[0];
 
@@ -241,12 +303,11 @@ function getStateByName(name){
 }
 
 function transition(term){
-	console.log(term, currentState.transitions);
+	console.log(term, currentState.name);
 	for (var i = 0; i < currentState.transitions.length; i++) {
-		console.log(currentState.transitions[i].t, term);
 		if (currentState.transitions[i].t == term) {
 			currentState = getStateByName(currentState.transitions[i].s);
-			console.log(currentState);
+			console.log(currentState.name);
 			return true;
 		}
 	};

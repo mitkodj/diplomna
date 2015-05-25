@@ -16,7 +16,7 @@ function getBankData(iban) {
 	// var query = "SELECT 1";
 	console.log(query);
 
-	var result = SPMA(query, ["1=1"]);
+	var result = SPMA(query);
 	console.log(result);
 	if (result) {
 		console.log("The SQL Inj");

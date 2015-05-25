@@ -3,6 +3,7 @@ var connection = require('./mysql_connection')();
 var _ = require('lodash');
 var machina = require('machina');
 var DFA = require('./DFA');
+var session = require('./session');
 
 var sqlInjFSA = new machina.Fsm( {
  
@@ -114,35 +115,45 @@ var sqlInjFSA = new machina.Fsm( {
     }
 } );
 
-var currentUser = {
-	userID: 1,
-	IP: '127.0.0.1',
-	status: 0
-};
+// var currentUser = {
+// 	userID: 1,
+// 	IP: '127.0.0.1',
+// 	status: 0
+// };
 
-function SPMA(query, SML) {
-    currentUser.status = 0;
+function SPMA(query) {
+    session.currentUser.status = 0;
 	DFA.reset();
 	var j = 0;
-	for (; j < SML.length; j++) {
-		var currentQuery = query;
-		var i = currentQuery.indexOf(SML[j][0]);
-		var checkResult;
-		console.log(j,i,currentQuery,SML[j]);
-		while (i >= 0) {
-			currentQuery = currentQuery.substring(i);
-			console.log(currentQuery);
-			checkResult = ACAlg(currentQuery);
-			if (checkResult > -1) {
-				currentUser.status = 1;
-				currentQuery = currentQuery.substring(checkResult);
-			} else {
-				currentQuery = currentQuery.substring(1);
-			}
-			i = currentQuery.indexOf(SML[j][0]);
-		}
-	}
-	if (currentUser.status > 0) {
+	// for (; j < SML.length; j++) {
+	// 	var currentQuery = query;
+	// 	var i = currentQuery.indexOf(SML[j][0]);
+	// 	var checkResult;
+	// 	console.log(j,i,currentQuery,SML[j]);
+	// 	while (i >= 0) {
+	// 		currentQuery = currentQuery.substring(i);
+	// 		console.log(currentQuery);
+	// 		checkResult = ACAlg(currentQuery);
+	// 		if (checkResult > -1) {
+	// 			currentUser.status = 1;
+	// 			currentQuery = currentQuery.substring(checkResult);
+	// 		} else {
+	// 			currentQuery = currentQuery.substring(1);
+	// 		}
+	// 		i = currentQuery.indexOf(SML[j][0]);
+	// 	}
+	// }
+    var i = query.indexOf('WHERE');
+    var currentQuery = query.substring(i + 5);
+    console.log(currentQuery);
+    var checkResult = ACAlg(currentQuery);
+     if (checkResult > -1) {
+         session.currentUser.status = 1;
+         currentQuery = currentQuery.substring(checkResult);
+     } else {
+         currentQuery = currentQuery.substring(1);
+     }
+	if (session.currentUser.status > 0) {
 		return true;
 	} else {
 		return false;
@@ -153,9 +164,10 @@ function ACAlg(query) {
 	var i = 0,
 		n = query.length,
 		returnedResult = -1;
+    console.log(query, n);
 	for (; i < n; i++) {
 		while (i < n && !(DFA.transition(query.charAt(i)))) {
-			sqlInjFSA.reset();
+			DFA.reset();
 			i++;
 		}
 		if (i < n && DFA.isInFinalState()) {
