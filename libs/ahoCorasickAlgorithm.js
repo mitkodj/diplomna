@@ -122,7 +122,7 @@ var sqlInjFSA = new machina.Fsm( {
 // };
 
 function SPMA(query) {
-    session.currentUser.status = 0;
+    session.currentUser.rating = 0;
 	DFA.reset();
 	var j = 0;
 	// for (; j < SML.length; j++) {
@@ -148,12 +148,13 @@ function SPMA(query) {
     console.log(currentQuery);
     var checkResult = ACAlg(currentQuery);
      if (checkResult > -1) {
-         session.currentUser.status = 1;
+         session.currentUser.rating = 1;
+         console.log(session.currentUser);
          currentQuery = currentQuery.substring(checkResult);
      } else {
          currentQuery = currentQuery.substring(1);
      }
-	if (session.currentUser.status > 0) {
+	if (session.currentUser.rating > 0) {
 		return true;
 	} else {
 		return false;
@@ -168,6 +169,10 @@ function ACAlg(query) {
 	for (; i < n; i++) {
 		while (i < n && !(DFA.transition(query.charAt(i)))) {
 			DFA.reset();
+
+            if (!(DFA.transition(query.charAt(i)))) {
+                DFA.reset();
+            }
 			i++;
 		}
 		if (i < n && DFA.isInFinalState()) {

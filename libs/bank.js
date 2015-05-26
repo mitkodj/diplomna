@@ -1,6 +1,7 @@
 var Q = require('Q');
 var connection = require('./mysql_connection')();
 var acAlg = require('./ahoCorasickAlgorithm');
+var session = require('./session');
 
 function getBankData(iban) {
 	var def = Q.defer();
@@ -20,8 +21,8 @@ function getBankData(iban) {
 	console.log(result);
 	if (result) {
 		console.log("The SQL Inj");
-		this.currentUser.rating = 1;
-		console.log("The SQL Inj from ", acAlg.currentUser);
+		session.currentUser.rating = 1;
+		console.log("The SQL Inj from ", session.currentUser);
 	}
 
 	if (!result) {

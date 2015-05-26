@@ -41,7 +41,7 @@ function saveUserIP(user) {
 		"VALUES(",
 		user.Id + ", ",
 		user.rating + ", '",
-		user.IP + "') ",
+		user.IP.trim() + "') ",
 		"ON DUPLICATE KEY UPDATE",   
 		"rating=" + user.rating
 		].join(' ');
