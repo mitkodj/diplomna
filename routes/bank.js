@@ -43,7 +43,7 @@ router.post('/testTool', function(req, res) {
 		"1 OR 1=1",
 		"1 AND " + minVal + "=" + maxVal,
 		"1 UNION SELECT @@version, 1, 1",
-		"1 UNION SELECT version(), 1, 1"
+		"1 UNION SELECT version(), 1, 1",
 	];
   banks.getBankData(req.body.iban)
   .then(function(rows) {

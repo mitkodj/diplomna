@@ -177,6 +177,7 @@ function ACAlg(query) {
 		}
 		if (i < n && DFA.isInFinalState()) {
 			returnedResult = i;
+            return returnedResult;
 		}
 	}
 
