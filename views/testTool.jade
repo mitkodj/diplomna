@@ -1,0 +1,46 @@
+script(type='text/javascript' src='http://code.jquery.com/jquery.min.js')
+link(rel='stylesheet', href='style.css')
+script.
+	$(document).ready(function() {
+		console.log('Mitkoooo');
+		$("input[type=button]").click( function() {
+		$.ajax( {
+				type: "GET",
+				url: '/testTool/test',
+				dataType : "json",
+				success: function( response ) {
+					var resultTable = document.getElementById('testResultsTable');
+					
+					resultTable.innerHTML = "<tr><th>Id</th><th>Заявка</th><th>Статус на изпращача</th><th>Резултат</th></tr>";
+
+					console.log(response, typeof response);
+					for(var i = 0; i< response.length; i++){
+		                var tableRow = "<tr><td>" +
+		                 	i +
+		                    "</td><td>" +
+		                    response[i].query +
+		                    "</td><td>" + 
+		                    response[i].user_status +
+		                    "</td><td>" + 
+		                    response[i].results + "</td></tr>";
+		                $('#testResultsTable').append(tableRow);
+		            }
+		        },
+		        error: function(err) {
+		        	console.log("ERRor");
+		       		var resultTable = document.getElementById('testResultsTable');
+					
+					resultTable.innerHTML = "<tr><th>Bank</th><th>IBAN</th><th>Withdraw</th></tr>";
+		        	alert("SQL Injection");
+		        }
+			});
+		} );
+		})
+div(name="IBANSearch", method="post")
+	input(type="button", name="testButton", value="Run Test")
+table(id="testResultsTable")
+	tr
+		th Id
+		th Заявка
+		th Статус на изпращача
+		th Резултат
