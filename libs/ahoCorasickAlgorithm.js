@@ -122,7 +122,7 @@ var sqlInjFSA = new machina.Fsm( {
 // };
 
 function SPMA(query) {
-    session.currentUser.rating = 0;
+    // session.currentUser.rating = 0;
 	DFA.reset();
 	var j = 0;
 	// for (; j < SML.length; j++) {

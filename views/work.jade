@@ -2,7 +2,6 @@ script(type='text/javascript' src='http://code.jquery.com/jquery.min.js')
 link(rel='stylesheet', href='style.css')
 script.
 	$( document ).ready(function() {
-		console.log('We are the heroes.');
 		$("input[type=submit]").click( function() {
 			//- console.log($("input[name=iban]").value);
 			var iban = document.getElementsByName('iban')[0].value;
@@ -36,11 +35,16 @@ script.
 		        }
 			});
 		} );
+
+		$("input[type=button]").click( function() {
+			window.location.assign("/testTool");
+		} );
 		return false;
 	});
 div(name="IBANSearch", method="post")
 	input(type="text", name="iban")
 	input(type="submit", value="SEARCH")
+	input(type="button", value="TEST TOOL")
 table(id="resultsTable")
 	tr
 		th Bank
