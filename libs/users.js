@@ -6,35 +6,26 @@ var session = require('./session');
 function getUserData(username, password) {
 	var def = Q.defer();
 
-	// connection.connect(function(err) {
-	//   	if (err) {
-	// 	  console.error('error connecting: ' + err.stack);
-	// 	  return;
-	// 	}
+	var query = ["SELECT UD.*, CS.IP, CS.rating",
+	"FROM diplomna_rabota.user_data UD",
+	"LEFT JOIN diplomna_rabota.client_status CS",
+	"ON UD.Id = CS.distinctKey",
+	"WHERE username='" + username + "'",
+	"AND password='" + password + "'"
+	].join(' ');
 
-		console.log('connected as id ' + connection.threadId);
+	console.log(query);
 
-		var query = ["SELECT UD.*, CS.IP, CS.rating",
-		"FROM diplomna_rabota.user_data UD",
-		"LEFT JOIN diplomna_rabota.client_status CS",
-		"ON UD.Id = CS.distinctKey",
-		"WHERE username='" + username + "'",
-		"AND password='" + password + "'"
-		].join(' ');
+	connection.query(query, function(err, rows, fields) {
+		if (err) def.reject(err);
 
-		console.log(query);
-
-		connection.query(query, function(err, rows, fields) {
-			if (err) def.reject(err);
-
-			def.resolve(rows);
-		});
-	// });
+		def.resolve(rows);
+	});
 
 	return def.promise;
 }
 
-function saveUserIP(user) {
+function saveUserInfo(user) {
 	console.log("in saveUserIP", user);
 	var query = ["INSERT INTO",
 		"diplomna_rabota.client_status(distinctKey, rating, IP)",
@@ -47,20 +38,18 @@ function saveUserIP(user) {
 		].join(' ');
 		console.log(query);
 
-		connection.query(query, function(err, rows, fields) {
-			if (err) throw err;
+	connection.query(query, function(err, rows, fields) {
+		if (err) throw err;
 
-			console.log(rows);
-		});
+		console.log(rows);
+	});
 }
 
-function SPMA(query, SML) {
-	console.log(session.currentUser);
-	return acAlg.SPMA(query, SML);
-}
+// function SPMA(query, SML) {
+// 	return acAlg.SPMA(query, SML);
+// }
 
 module.exports = {
 	    getUserData: getUserData,
-	    acAlgCall: SPMA,
-	    saveUserIP: saveUserIP
+	    saveUserInfo: saveUserInfo
 };
