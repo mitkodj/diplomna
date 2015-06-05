@@ -49,28 +49,6 @@ router.get('/test', function(req, res) {
     async.map(randomNumbers, banks.getBankDataAsync, function (err, results) {
         res.send(results);
     });
-
-    // console.log(randomNumbers);
-    // res.send(randomNumbers);
-  // banks.getBankData(req.body.iban)
-  // .then(function(rows) {
-  //   console.log(rows);
-
-  //   if (rows == "Attempted SQL Injection.") {
-  //   	users.saveUserIP(session.currentUser);
-  //   }
-  //   res.send(rows);
-  //   // if (rows.length == 1){
-  //   //   var htmlOutput = {
-  //   //     bank: {
-  //   //       name: rows[0].username
-  //   //     }
-  //   //   };
-  //   //   res.send('yay');
-  //   // } else {
-  //   //   res.send('nay');
-  //   // }
-  // });
 });
 
 module.exports = router;
