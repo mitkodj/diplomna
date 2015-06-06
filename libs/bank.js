@@ -20,9 +20,7 @@ function getBankData(iban) {
 	var result = SPMA(query);
 	console.log(result);
 	if (result) {
-		console.log("The SQL Inj");
 		session.currentUser.rating = 1;
-		console.log("The SQL Inj from ", session.currentUser);
 	}
 
 	if (!result) {
@@ -32,7 +30,7 @@ function getBankData(iban) {
 			def.resolve(rows);
 		});	
 	} else {
-		def.resolve("Attempted SQL Injection.")
+		def.resolve("Blind SQL Injection Anomaly Detected.")
 	}
 
 	return def.promise;

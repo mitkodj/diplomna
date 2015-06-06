@@ -47,22 +47,11 @@ router.post('/testTool', function(req, res) {
 	];
   banks.getBankData(req.body.iban)
   .then(function(rows) {
-    console.log(rows);
 
-    if (rows == "Attempted SQL Injection.") {
+    if (rows == "Blind SQL Injection Anomaly Detected.") {
     	users.saveUserIP(session.currentUser);
     }
     res.send(rows);
-    // if (rows.length == 1){
-    //   var htmlOutput = {
-    //     bank: {
-    //       name: rows[0].username
-    //     }
-    //   };
-    //   res.send('yay');
-    // } else {
-    //   res.send('nay');
-    // }
   });
 });
 
