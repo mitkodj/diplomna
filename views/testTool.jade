@@ -11,7 +11,7 @@ script.
 				success: function( response ) {
 					var resultTable = document.getElementById('testResultsTable');
 					
-					resultTable.innerHTML = "<tr><th>Id</th><th>Заявка</th><th>Статус на изпращача</th><th>Резултат</th></tr>";
+					resultTable.innerHTML = "<tr><th>Потребител</th><th>Заявка</th><th>Статус на изпращача</th><th>Резултат</th></tr>";
 
 					console.log(response, typeof response);
 					for(var i = 0; i< response.length; i++){
