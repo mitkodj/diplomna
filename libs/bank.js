@@ -14,11 +14,9 @@ function getBankData(iban) {
 	"ON B.Id = I.bankId",
 	"WHERE I.IBAN = " + iban
 	].join(' ');
-	// var query = "SELECT 1";
-	console.log(query);
 
 	var result = SPMA(query);
-	console.log(result);
+
 	if (result) {
 		session.currentUser.rating = 1;
 	}
