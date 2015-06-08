@@ -32,6 +32,29 @@ router.get('/test', function(req, res) {
         "1 UNION SELECT @@hostname, 1, 1", 
 	];
 
+    var ratings = {
+        'mitko': {
+            '127.0.0.1': 0,
+            '192.167.11.203': 0,
+            '68.191.13.44': 0
+        },
+        'mira': {
+            '127.0.0.1': 0,
+            '192.167.11.203': 0,
+            '68.191.13.44': 0
+        },
+        'ivan': {
+            '127.0.0.1': 0,
+            '192.167.11.203': 0,
+            '68.191.13.44': 0
+        },
+        'test_user': {
+            '127.0.0.1': 0,
+            '192.167.11.203': 0,
+            '68.191.13.44': 0
+        }
+    };
+
     var users = [{
         Id: 1,
         username: 'mitko',
@@ -62,7 +85,8 @@ router.get('/test', function(req, res) {
     }
 
     var randomData = _.map(randomNumbers, function(element){
-        return users[element];
+        // return users[element];
+        return JSON.parse(JSON.stringify(users[element]));
     });
 
     // console.log(randomData);
@@ -86,7 +110,9 @@ router.get('/test', function(req, res) {
         console.log(i, randomData[i].username, randomData[i].IP);
     }
 
-    var groupedCollection = _.groupBy(randomData, 'username');
+    var groupedCollection = _.groupBy(randomData, function(element){
+        return element.username + element.IP
+    });
 
     // async.map(randomData, function() {
 
@@ -95,6 +121,7 @@ router.get('/test', function(req, res) {
     // });
 
     res.send(groupedCollection);
+    // res.send(randomData);
 });
 
 module.exports = router;
