@@ -5,6 +5,7 @@ var jade = require('jade');
 var Random = require('random-js');
 var async = require('async');
 var _ = require('lodash');
+var q = require('q');
 
 var session = require('../libs/session');
 var banks = require('../libs/bank');
@@ -96,7 +97,7 @@ router.get('/test', function(req, res) {
     for (i=0; i < 20; i++) {
         var index = Random.integer(0, 10)(Random.engines.nativeMath);
 
-        randomData[i].query = requestQueries[index];
+        randomData[i].iban = requestQueries[index];
 
         var ip = Random.integer(0, 2)(Random.engines.nativeMath);
 
@@ -114,13 +115,18 @@ router.get('/test', function(req, res) {
         return element.username + element.IP
     });
 
-    // async.map(randomData, function() {
+    async.each(randomData, function(group, callback) {
+        var results = [];
+        var currentStatus = 0;
 
-    // }, function (err, results) {
-        // res.send(results);
-    // });
+        async.eachLimit(randomData, 1, banks.getBankDataAsync, function(err, results) {
+            callback(null, results);
+        });
+    }, function (err, results) {
+        res.send(results);
+    });
 
-    res.send(groupedCollection);
+    // res.send(groupedCollection);
     // res.send(randomData);
 });
 

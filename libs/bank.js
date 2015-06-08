@@ -34,7 +34,7 @@ function getBankData(iban) {
 	return def.promise;
 }
 
-function getBankDataAsync(iban, callback) {
+function getBankDataAsync(user_object, callback) {
 
 	var query = ["SELECT BD.withrawal, I.IBAN, B.bankName",
 	"FROM diplomna_rabota.bank_data BD",
@@ -42,7 +42,7 @@ function getBankDataAsync(iban, callback) {
 	"ON I.Id = BD.IBAN",
 	"LEFT JOIN diplomna_rabota.banks B",
 	"ON B.Id = I.bankId",
-	"WHERE I.IBAN = " + iban
+	"WHERE I.IBAN = " + user_object.iban
 	].join(' ');
 	// var query = "SELECT 1";
 	console.log(query);
@@ -62,6 +62,8 @@ function getBankDataAsync(iban, callback) {
 			}
 
 			return callback(null, {
+				username: user_object.username,
+				IP: user_object.IP,
 				query: query,
 				user_status: session.currentUser.rating,
 				results: rows.length + " rows as result"
@@ -71,6 +73,8 @@ function getBankDataAsync(iban, callback) {
 	} else {
 		// def.resolve("Attempted SQL Injection.");
 		return callback(null, {
+			username: user_object.username,
+			IP: user_object.IP,
 			query: query,
 			user_status: session.currentUser.rating,
 			results: "Attempted SQL Injection."
