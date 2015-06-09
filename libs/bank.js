@@ -34,7 +34,9 @@ function getBankData(iban) {
 	return def.promise;
 }
 
-function getBankDataAsync(user_object, callback) {
+function getBankDataAsync(iban, callback) {
+
+	var def = Q.defer();
 
 	var query = ["SELECT BD.withrawal, I.IBAN, B.bankName",
 	"FROM diplomna_rabota.bank_data BD",
@@ -42,49 +44,30 @@ function getBankDataAsync(user_object, callback) {
 	"ON I.Id = BD.IBAN",
 	"LEFT JOIN diplomna_rabota.banks B",
 	"ON B.Id = I.bankId",
-	"WHERE I.IBAN = " + user_object.iban
+	"WHERE I.IBAN = " + iban
 	].join(' ');
-	// var query = "SELECT 1";
-	console.log(query);
 
-	var result = SPMA(query);
-	// console.log(result);
-	if (result) {
-		// console.log("The SQL Inj");
-		session.currentUser.rating = 1;
-		console.log("The SQL Inj from ", session.currentUser);
-	}
+	var result = SPMA_test(query);
 
 	if (!result) {
 		connection.query(query, function(err, rows, fields) {
-			if (err) {
-				callback(err, null);
-			}
+			if (err) throw err;
 
-			return callback(null, {
-				username: user_object.username,
-				IP: user_object.IP,
-				query: query,
-				user_status: session.currentUser.rating,
-				results: rows.length + " rows as result"
-			});
-			// def.resolve(rows);
+			def.resolve(rows);
 		});	
 	} else {
-		// def.resolve("Attempted SQL Injection.");
-		return callback(null, {
-			username: user_object.username,
-			IP: user_object.IP,
-			query: query,
-			user_status: session.currentUser.rating,
-			results: "Attempted SQL Injection."
-		});
-		// return callback(null, "Attempted SQL Injection.");
+		def.resolve("Blind SQL Injection Anomaly Detected.")
 	}
+
+	return def.promise;
 }
 
 function SPMA(query, SML) {
 	return acAlg.SPMA(query, SML);
+}
+
+function SPMA_test(query, SML) {
+	return acAlg.SPMA_test(query, SML);
 }
 
 module.exports = {

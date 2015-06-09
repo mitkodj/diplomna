@@ -102,32 +102,91 @@ router.get('/test', function(req, res) {
         var ip = Random.integer(0, 2)(Random.engines.nativeMath);
 
         randomData[i].IP = IPs[ip];
-        console.log(i,randomData[i].username, ip, randomData[i].IP);
+        // console.log(i,randomData[i].username, ip, randomData[i].IP);
     }
 
-    console.log('=================');
+    // console.log('=================');
 
-    for (i=0; i<20;i++) {
-        console.log(i, randomData[i].username, randomData[i].IP);
-    }
+    // for (i=0; i<20;i++) {
+    //     console.log(i, randomData[i].username, randomData[i].IP);
+    // }
 
     var groupedCollection = _.groupBy(randomData, function(element){
-        return element.username + element.IP
+        return element.username;
+    });
+    // console.log(groupedCollection);
+    console.log('=====111============');
+    // for (i=0; i<groupedCollection.length;i++) {
+    //     console.log(i, groupedCollection[i].length);
+    // }
+
+    async.map(groupedCollection, iteratorFunction,
+     function (err, results) {
+        // console.log("Finished!");
+        console.log(err,results);
+        res.send(results['mitko']);
     });
 
-    async.each(randomData, function(group, callback) {
-        var results = [];
-        var currentStatus = 0;
-
-        async.eachLimit(randomData, 1, banks.getBankDataAsync, function(err, results) {
-            callback(null, results);
-        });
-    }, function (err, results) {
-        res.send(results);
-    });
+    // async.each(groupedCollection, iteratorFunction,
+    //  function (err, results) {
+    //     // console.log(results);
+    //     res.send(results);
+    // });
 
     // res.send(groupedCollection);
     // res.send(randomData);
 });
+
+function itFunc(element, callback) {
+    banks.getBankDataAsync(element.iban)
+    .then(function(result) {
+        console.log('----',element.iban, result);
+        return callback(null, result);
+    });
+    // return callback(undefined, 1);
+}
+
+function iteratorFunction(group, cb) {
+    var results = [];
+    var currentStatus = 0;
+    console.log(group.length);
+
+    async.map(group, function(element, callback) {
+            // console.log(element.iban);
+            banks.getBankData(element.iban)
+            .then(function(result) {
+                // console.log(element.iban, result);
+                // if (result == "Blind SQL Injection Anomaly Detected.") {
+                //     currentStatus = 1;
+                // }
+                // console.log(element.iban, result);
+                callback(null, result);
+            });
+        }, function (err, resultGroup) {
+            // console.log('>>>', err, resultGroup);
+            cb(err, resultGroup);
+        });
+}
+
+function iterateUntil(array, results, i){
+  // This line would eventually resolve the promise with something matching
+  // the final ending condition.
+  var element = array[i];
+  console.log(element.iban);
+  return 
+    banks.getBankData(element.iban)
+    .then(function(result) {
+
+        console.log(result);
+        results.push(result);
+      // If the promise was resolved with the loop end condition then you just
+      // return the value or something, which will resolve the promise.
+      if (i == array.length) return results;
+
+      // Otherwise you call 'iterateUntil' again which will replace the current
+      // promise with a new one that will do another iteration.
+      else return iterateUntil(array, results, i + 1);
+    });
+}
 
 module.exports = router;
