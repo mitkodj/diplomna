@@ -19,12 +19,15 @@ var bodyParser = require('body-parser');
 // var logger = log4js.getLogger('cheese');
 // logger.setLevel('ERROR');
 
+var app = express();
+
+// var server = app.listen(3010);
+// var io = require('socket.io').listen(server);
+
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var bank = require('./routes/bank');
 var testTool = require('./routes/testTool');
-
-var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -76,6 +79,25 @@ if (app.get('env') === 'development') {
     });
 }
 
+app.use(function (req, res, next) {
+
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+});
+
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
@@ -85,6 +107,16 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
+
+// io.on('connection', function (socket) {
+//     console.log("socket");
+//   socket.emit('news', { hello: 'world' });
+//   socket.on('my other event', function (data) {
+//     console.log(data);
+//     io.sockets.emit('message', data);
+//   // console.log('a user connected');
+//   });
+// });
 
 
 module.exports = app;

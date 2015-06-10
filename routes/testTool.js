@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+
 var log4js = require('log4js');
 var jade = require('jade');
 var Random = require('random-js');
@@ -10,8 +11,30 @@ var q = require('q');
 var session = require('../libs/session');
 var banks = require('../libs/bank');
 
+
+var app = express();
+
+var server = app.listen(3010);
+var io = require('socket.io').listen(server);
+io.on('connection', function (socket) {
+    console.log("socket");
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+    io.sockets.emit('message', data);
+  // console.log('a user connected');
+  });
+});
+
 router.get('/', function(req, res) {
   res.render('testTool', { title: 'Express' });
+});
+
+router.post('/req', function(req, res) {
+  // res.render('testTool', { title: 'Express' });
+  console.log('1111', req.body);
+  io.sockets.emit("news", {info: "12345"});
+  res.send(req.body);
 });
 
 router.get('/test', function(req, res) {
@@ -85,7 +108,7 @@ router.get('/test', function(req, res) {
     ];
 
     var randomNumbers = [];
-    for (var i=0; i < 20; i++) {
+    for (var i=0; i < 30; i++) {
         randomNumbers.push(Random.integer(0, 3)(Random.engines.nativeMath));
     }
 
@@ -98,7 +121,7 @@ router.get('/test', function(req, res) {
 
     randomNumbers = [];
 
-    for (i=0; i < 20; i++) {
+    for (i=0; i < 30; i++) {
         var index = Random.integer(0, 10)(Random.engines.nativeMath);
 
         randomData[i].iban = requestQueries[index];
@@ -116,7 +139,7 @@ router.get('/test', function(req, res) {
     // }
 
     var groupedCollection = _.groupBy(randomData, function(element){
-        return element.username;
+        return element.username + element.IP;
     });
     // console.log(groupedCollection);
     console.log('=====111============');

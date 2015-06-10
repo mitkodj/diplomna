@@ -26,21 +26,21 @@ a {
 }
 
 #testResultsTable th {
-	background-color: yellow;
+	background-color: gray;
 	border-width: 2px;
 	border-color: black;
 }
 
-tr.redAlert {
+.redAlert {
 	background-color: red;
 	color: white;
 }
-tr.yellowAlert {
+.yellowAlert {
 	background-color: yellow;
 }
-tr.greenAlert {
-	background-color: green;
-	color: white;
+.greenAlert {
+	background-color: white;
+	color: black;
 }
 /*
 #resultsTable th {

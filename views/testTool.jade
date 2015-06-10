@@ -1,8 +1,13 @@
 script(type='text/javascript' src='http://code.jquery.com/jquery.min.js')
 link(rel='stylesheet', href='/stylesheets/style.css')
+script(src='/socket.io/socket.io.js')
 script.
+	var socket = io("http://localhost:3010");
+	socket.on('news', function (data) {
+		console.log("lol",data);
+		socket.emit('my other event', { my: 'data' });
+		});
 	$(document).ready(function() {
-		console.log('Mitkoooo');
 		$("input[type=button]").click( function() {
 		$.ajax( {
 				type: "GET",
@@ -15,27 +20,28 @@ script.
 
 					console.log(response, typeof response);
 					for(var i = 0; i< response.length; i++){
-		                var tableRow = "<tr cls='";
+		                var tableRow = "",
+		                	td = "";
 
 		              		if (response[i].rating == 1) {
 		              			if (response[i].result == "Blind SQL Injection Anomaly Detected.") {
-		              				tableRow += "redAlert";
+		              				td = "</td><td class='redAlert'>";
 		              			} else {
-		              				tableRow += "yellowAlert";
+		              				td = "</td><td class='yellowAlert'>";
 		              			}
 		              		} else {
-		              			tableRow += "greenAlert";
+		              			td = "</td><td class='greenAlert'>";
 		              		}
-		                	tableRow += "'><td>";
+		                	tableRow += "<tr>" + td;
 		                	tableRow +=
 		                 	response[i].username +
-		                    "</td><td>" +
+		                    "</td>" + td +
 		                    response[i].IP +
-		                    "</td><td>" +
+		                    "</td>" +  td +
 		                    response[i].query +
-		                    "</td><td>" + 
+		                    "</td>" + td + 
 		                    response[i].rating +
-		                    "</td><td>" + 
+		                    "</td>" + td + 
 		                    response[i].result + "</td></tr>";
 		                $('#testResultsTable').append(tableRow);
 		            }
