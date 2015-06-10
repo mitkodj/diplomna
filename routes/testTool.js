@@ -24,7 +24,11 @@ router.get('/test', function(req, res) {
 		111111111,
 		414141414,
 		-111,
-		"1 OR 1=1",
+		123456789,
+        111111111,
+        414141414,
+        -111,
+        "1 OR 1=1",
 		"1 AND " + minVal + "=" + maxVal,
 		"1 UNION SELECT @@version, 1, 1",
 		"1 UNION SELECT version(), 1, 1",
@@ -123,8 +127,9 @@ router.get('/test', function(req, res) {
     async.map(groupedCollection, iteratorFunction,
      function (err, results) {
         // console.log("Finished!");
-        console.log(err,results);
-        res.send(results['mitko']);
+        // console.log(err,results);
+        var resArray = _.flatten(_.values(results));
+        res.send(resArray);
     });
 
     // async.each(groupedCollection, iteratorFunction,
@@ -140,7 +145,7 @@ router.get('/test', function(req, res) {
 function itFunc(element, callback) {
     banks.getBankDataAsync(element.iban)
     .then(function(result) {
-        console.log('----',element.iban, result);
+        // console.log('----',element.iban, result);
         return callback(null, result);
     });
     // return callback(undefined, 1);
@@ -149,18 +154,28 @@ function itFunc(element, callback) {
 function iteratorFunction(group, cb) {
     var results = [];
     var currentStatus = 0;
-    console.log(group.length);
+    // console.log(group.length);
 
-    async.map(group, function(element, callback) {
+    async.mapSeries(group, function(element, callback) {
             // console.log(element.iban);
-            banks.getBankData(element.iban)
+            banks.getBankDataAsync(element.iban)
             .then(function(result) {
                 // console.log(element.iban, result);
                 // if (result == "Blind SQL Injection Anomaly Detected.") {
                 //     currentStatus = 1;
                 // }
                 // console.log(element.iban, result);
-                callback(null, result);
+                if (result == "Blind SQL Injection Anomaly Detected.") {
+                    currentStatus = 1;
+                }
+                // console.log(status);
+                callback(null, {
+                    username: element.username,
+                    IP: element.IP,
+                    rating: currentStatus,
+                    query: element.iban,
+                    result: result
+                });
             });
         }, function (err, resultGroup) {
             // console.log('>>>', err, resultGroup);

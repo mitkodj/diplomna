@@ -1,5 +1,5 @@
 script(type='text/javascript' src='http://code.jquery.com/jquery.min.js')
-link(rel='stylesheet', href='style.css')
+link(rel='stylesheet', href='/stylesheets/style.css')
 script.
 	$(document).ready(function() {
 		console.log('Mitkoooo');
@@ -11,18 +11,32 @@ script.
 				success: function( response ) {
 					var resultTable = document.getElementById('testResultsTable');
 					
-					resultTable.innerHTML = "<tr><th>Потребител</th><th>Заявка</th><th>Статус на изпращача</th><th>Резултат</th></tr>";
+					resultTable.innerHTML = "<tr><th>Потребител</th><th>IP адрес</th><th>Заявка</th><th>Статус на изпращача</th><th>Резултат</th></tr>";
 
 					console.log(response, typeof response);
 					for(var i = 0; i< response.length; i++){
-		                var tableRow = "<tr><td>" +
-		                 	i +
+		                var tableRow = "<tr cls='";
+
+		              		if (response[i].rating == 1) {
+		              			if (response[i].result == "Blind SQL Injection Anomaly Detected.") {
+		              				tableRow += "redAlert";
+		              			} else {
+		              				tableRow += "yellowAlert";
+		              			}
+		              		} else {
+		              			tableRow += "greenAlert";
+		              		}
+		                	tableRow += "'><td>";
+		                	tableRow +=
+		                 	response[i].username +
+		                    "</td><td>" +
+		                    response[i].IP +
 		                    "</td><td>" +
 		                    response[i].query +
 		                    "</td><td>" + 
-		                    response[i].user_status +
+		                    response[i].rating +
 		                    "</td><td>" + 
-		                    response[i].results + "</td></tr>";
+		                    response[i].result + "</td></tr>";
 		                $('#testResultsTable').append(tableRow);
 		            }
 		        },
@@ -30,7 +44,7 @@ script.
 		        	console.log("ERRor");
 		       		var resultTable = document.getElementById('testResultsTable');
 					
-					resultTable.innerHTML = "<tr><th>Bank</th><th>IBAN</th><th>Withdraw</th></tr>";
+					resultTable.innerHTML = "<tr><th>Потребител</th><th>IP адрес</th><th>Заявка</th><th>Статус на изпращача</th><th>Резултат</th></tr>";
 		        	alert("SQL Injection");
 		        }
 			});
@@ -40,7 +54,8 @@ div(name="IBANSearch", method="post")
 	input(type="button", name="testButton", value="Run Test")
 table(id="testResultsTable")
 	tr
-		th Id
+		th Потребител
+		th IP адрес
 		th Заявка
 		th Статус на изпращача
 		th Резултат

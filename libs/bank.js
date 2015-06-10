@@ -66,8 +66,8 @@ function SPMA(query, SML) {
 	return acAlg.SPMA(query, SML);
 }
 
-function SPMA_test(query, SML) {
-	return acAlg.SPMA_test(query, SML);
+function SPMA_test(query) {
+	return acAlg.SPMA_test(query);
 }
 
 module.exports = {

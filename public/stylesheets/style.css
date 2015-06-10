@@ -1,7 +1,7 @@
-body {
+/*body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
+}*/
 
 a {
   color: #00B7FF;
@@ -23,6 +23,24 @@ a {
 
 #resultsTable th {
 	background-color: yellow;
+}
+
+#testResultsTable th {
+	background-color: yellow;
+	border-width: 2px;
+	border-color: black;
+}
+
+tr.redAlert {
+	background-color: red;
+	color: white;
+}
+tr.yellowAlert {
+	background-color: yellow;
+}
+tr.greenAlert {
+	background-color: green;
+	color: white;
 }
 /*
 #resultsTable th {
