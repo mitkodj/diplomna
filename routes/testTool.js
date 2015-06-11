@@ -10,6 +10,7 @@ var q = require('q');
 
 var session = require('../libs/session');
 var banks = require('../libs/bank');
+var users = require('../libs/users');
 
 
 var app = express();
@@ -45,14 +46,27 @@ router.post('/req', function(req, res) {
   //       }
   //       // console.log(status);
 
+        users.getUserDataByIP(req.body.username, req.body.password, req.body.IP)
+        .then(function(user){
+            var currentUser = rows[0],
+                currentStatus = 0;
 
-        io.sockets.emit("newData", {
-            username: req.body.username,
-            IP: req.body.IP,
-            rating: 0,
-            query: req.body.iban,
-            result: "ResultAAAA"
+            banks.getBankDataAsync(req.body.iban)
+            .then(function(result) {
+                if (result == "Blind SQL Injection Anomaly Detected.") {
+                    currentStatus = 1;
+                }
+
+                io.sockets.emit("newData", {
+                    username: req.body.username,
+                    IP: req.body.IP,
+                    rating: currentStatus,
+                    query: req.body.iban,
+                    result: result
+                });
+            });
         });
+
     // });
   res.send(req.body);
 });

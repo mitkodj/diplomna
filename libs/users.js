@@ -25,6 +25,29 @@ function getUserData(username, password) {
 	return def.promise;
 }
 
+function getUserDataByIP(username, password, IP) {
+	var def = Q.defer();
+
+	var query = ["SELECT UD.*, CS.IP, CS.rating",
+	"FROM diplomna_rabota.user_data UD",
+	"LEFT JOIN diplomna_rabota.client_status CS",
+	"ON UD.Id = CS.distinctKey",
+	"WHERE username='" + username + "'",
+	"AND password='" + password + "'",
+	"AND IP ='" + IP + "'"
+	].join(' ');
+
+	console.log(query);
+
+	connection.query(query, function(err, rows, fields) {
+		if (err) def.reject(err);
+
+		def.resolve(rows);
+	});
+
+	return def.promise;
+}
+
 function saveUserInfo(user) {
 	console.log("in saveUserIP", user);
 	var query = ["INSERT INTO",
@@ -51,5 +74,6 @@ function saveUserInfo(user) {
 
 module.exports = {
 	    getUserData: getUserData,
-	    saveUserInfo: saveUserInfo
+	    saveUserInfo: saveUserInfo,
+	    getUserDataByIP: getUserDataByIP
 };
