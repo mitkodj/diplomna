@@ -3,8 +3,50 @@ link(rel='stylesheet', href='/stylesheets/style.css')
 script(src='/socket.io/socket.io.js')
 script.
 	var socket = io("http://localhost:3010");
-	socket.on('news', function (data) {
+	var dataCollection = [];
+	socket.on('newData', function (data) {
+	
 		console.log("lol",data);
+		var resultTable = document.getElementById('testResultsTable');
+					
+		resultTable.innerHTML = "<tr><th>Потребител</th><th>IP адрес</th><th>Заявка</th><th>Статус на изпращача</th><th>Резултат</th></tr>";
+
+		console.log(data, typeof data);
+		var response = data;
+
+		dataCollection.push(response);
+
+		if (dataCollection.length > 30) {
+			dataCollection.shift();
+		}
+		
+		for(var i = dataCollection.length - 1; i >= 0; i--){
+			var tableRow = "",
+				td = "";
+
+				if (dataCollection[i].rating == 1) {
+					if (dataCollection[i].result == "Blind SQL Injection Anomaly Detected.") {
+						td = "</td><td class='redAlert'>";
+					} else {
+						td = "</td><td class='yellowAlert'>";
+					}
+				} else {
+					td = "</td><td class='greenAlert'>";
+				}
+				tableRow += "<tr>" + td;
+				tableRow +=
+				dataCollection[i].username +
+				"</td>" + td +
+				dataCollection[i].IP +
+				"</td>" +  td +
+				dataCollection[i].query +
+				"</td>" + td + 
+				dataCollection[i].rating +
+				"</td>" + td + 
+				dataCollection[i].result + "</td></tr>";
+			$('#testResultsTable').append(tableRow);
+		}
+
 		socket.emit('my other event', { my: 'data' });
 		});
 	$(document).ready(function() {
@@ -20,39 +62,39 @@ script.
 
 					console.log(response, typeof response);
 					for(var i = 0; i< response.length; i++){
-		                var tableRow = "",
-		                	td = "";
+						var tableRow = "",
+							td = "";
 
-		              		if (response[i].rating == 1) {
-		              			if (response[i].result == "Blind SQL Injection Anomaly Detected.") {
-		              				td = "</td><td class='redAlert'>";
-		              			} else {
-		              				td = "</td><td class='yellowAlert'>";
-		              			}
-		              		} else {
-		              			td = "</td><td class='greenAlert'>";
-		              		}
-		                	tableRow += "<tr>" + td;
-		                	tableRow +=
-		                 	response[i].username +
-		                    "</td>" + td +
-		                    response[i].IP +
-		                    "</td>" +  td +
-		                    response[i].query +
-		                    "</td>" + td + 
-		                    response[i].rating +
-		                    "</td>" + td + 
-		                    response[i].result + "</td></tr>";
-		                $('#testResultsTable').append(tableRow);
-		            }
-		        },
-		        error: function(err) {
-		        	console.log("ERRor");
-		       		var resultTable = document.getElementById('testResultsTable');
+							if (response[i].rating == 1) {
+								if (response[i].result == "Blind SQL Injection Anomaly Detected.") {
+									td = "</td><td class='redAlert'>";
+								} else {
+									td = "</td><td class='yellowAlert'>";
+								}
+							} else {
+								td = "</td><td class='greenAlert'>";
+							}
+							tableRow += "<tr>" + td;
+							tableRow +=
+							response[i].username +
+							"</td>" + td +
+							response[i].IP +
+							"</td>" +  td +
+							response[i].query +
+							"</td>" + td + 
+							response[i].rating +
+							"</td>" + td + 
+							response[i].result + "</td></tr>";
+						$('#testResultsTable').append(tableRow);
+					}
+				},
+				error: function(err) {
+					console.log("ERRor");
+					var resultTable = document.getElementById('testResultsTable');
 					
 					resultTable.innerHTML = "<tr><th>Потребител</th><th>IP адрес</th><th>Заявка</th><th>Статус на изпращача</th><th>Резултат</th></tr>";
-		        	alert("SQL Injection");
-		        }
+					alert("SQL Injection");
+				}
 			});
 		} );
 		})

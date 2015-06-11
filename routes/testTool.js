@@ -33,50 +33,52 @@ router.get('/', function(req, res) {
 router.post('/req', function(req, res) {
   // res.render('testTool', { title: 'Express' });
   console.log('1111', req.body);
-  banks.getBankDataAsync(req.body.iban)
-    .then(function(result) {
-        // console.log(element.iban, result);
-        // if (result == "Blind SQL Injection Anomaly Detected.") {
-        //     currentStatus = 1;
-        // }
-        // console.log(element.iban, result);
-        if (result == "Blind SQL Injection Anomaly Detected.") {
-            currentStatus = 1;
-        }
-        // console.log(status);
-        io.sockets.emit("news", {
+  // banks.getBankDataAsync(req.body.iban)
+  //   .then(function(result) {
+  //       // console.log(element.iban, result);
+  //       // if (result == "Blind SQL Injection Anomaly Detected.") {
+  //       //     currentStatus = 1;
+  //       // }
+  //       // console.log(element.iban, result);
+  //       if (result == "Blind SQL Injection Anomaly Detected.") {
+  //           currentStatus = 1;
+  //       }
+  //       // console.log(status);
+
+
+        io.sockets.emit("newData", {
             username: req.body.username,
             IP: req.body.IP,
-            rating: currentStatus,
+            rating: 0,
             query: req.body.iban,
-            result: result
+            result: "ResultAAAA"
         });
-    });
+    // });
   res.send(req.body);
 });
 
 router.get('/test', function(req, res) {
 
-	var minVal = Random.integer(0, 6)(Random.engines.nativeMath);
-	var maxVal = Random.integer(0, 10)(Random.engines.nativeMath);
+    var minVal = Random.integer(0, 6)(Random.engines.nativeMath);
+    var maxVal = Random.integer(0, 10)(Random.engines.nativeMath);
 
-	var requestQueries = [
-		123456789,
-		111111111,
-		414141414,
-		-111,
-		123456789,
+    var requestQueries = [
+        123456789,
+        111111111,
+        414141414,
+        -111,
+        123456789,
         111111111,
         414141414,
         -111,
         "1 OR 1=1",
-		"1 AND " + minVal + "=" + maxVal,
-		"1 UNION SELECT @@version, 1, 1",
-		"1 UNION SELECT version(), 1, 1",
+        "1 AND " + minVal + "=" + maxVal,
+        "1 UNION SELECT @@version, 1, 1",
+        "1 UNION SELECT version(), 1, 1",
         "1 UNION SELECT @@datadir, 1, 1",
         "1 UNION SELECT database(), 1, 1",
         "1 UNION SELECT @@hostname, 1, 1", 
-	];
+    ];
 
     var ratings = {
         'mitko': {
