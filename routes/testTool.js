@@ -33,7 +33,25 @@ router.get('/', function(req, res) {
 router.post('/req', function(req, res) {
   // res.render('testTool', { title: 'Express' });
   console.log('1111', req.body);
-  io.sockets.emit("news", {info: "12345"});
+  banks.getBankDataAsync(req.body.iban)
+    .then(function(result) {
+        // console.log(element.iban, result);
+        // if (result == "Blind SQL Injection Anomaly Detected.") {
+        //     currentStatus = 1;
+        // }
+        // console.log(element.iban, result);
+        if (result == "Blind SQL Injection Anomaly Detected.") {
+            currentStatus = 1;
+        }
+        // console.log(status);
+        io.sockets.emit("news", {
+            username: req.body.username,
+            IP: req.body.IP,
+            rating: currentStatus,
+            query: req.body.iban,
+            result: result
+        });
+    });
   res.send(req.body);
 });
 
