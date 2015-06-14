@@ -50,7 +50,7 @@ script.
 		socket.emit('my other event', { my: 'data' });
 		});
 	$(document).ready(function() {
-		$("input[type=button]").click( function() {
+		$("input[name=testButton]").click( function() {
 		$.ajax( {
 				type: "GET",
 				url: '/testTool/test',
@@ -97,9 +97,19 @@ script.
 				}
 			});
 		} );
+
+		$("input[name=configButton]").click( function() {
+			document.location = "config";
+		} );
 		})
+//- script(type='text/javascript' src='http://code.jquery.com/jquery.min.js')
+//- script(src='/socket.io/socket.io.js')
+block content
+	h1 Welcome to Security Traffic Analyzer
+	p If you want to start analyzing netword traffic to the server, click Track. In case you want to stap it click Untrack. If you want to add more patterns to the list of anomaly patterns you can do it through the config interface by clicking Edit Config.
 div(name="IBANSearch", method="post")
-	input(type="button", name="testButton", value="Run Test")
+	input(type="button", name="testButton", value="Track")
+	input(type="button", name="configButton", value="Edit Config")
 table(id="testResultsTable")
 	tr
 		th Потребител

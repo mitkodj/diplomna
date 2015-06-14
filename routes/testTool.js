@@ -47,7 +47,8 @@ router.post('/req', function(req, res) {
   //       // console.log(status);
 
         users.getUserDataByIP(req.body.username, req.body.password, req.body.IP)
-        .then(function(user){
+        .then(function(rows){
+            console.log(rows);
             var currentUser = rows[0],
                 currentStatus = 0;
 
@@ -55,8 +56,10 @@ router.post('/req', function(req, res) {
             .then(function(result) {
                 if (result == "Blind SQL Injection Anomaly Detected.") {
                     currentStatus = 1;
+                    currentUser.rating = 1;
                 }
 
+                console.log('emit');
                 io.sockets.emit("newData", {
                     username: req.body.username,
                     IP: req.body.IP,
@@ -64,6 +67,14 @@ router.post('/req', function(req, res) {
                     query: req.body.iban,
                     result: result
                 });
+
+                if (result == "Blind SQL Injection Anomaly Detected.") {
+                    users.saveUserInfo(currentUser)
+                    .then(function(r) {
+                        console.log(r);
+
+                    });
+                }
             });
         });
 

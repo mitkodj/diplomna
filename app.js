@@ -28,6 +28,7 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var bank = require('./routes/bank');
 var testTool = require('./routes/testTool');
+var config = require('./routes/config');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -57,6 +58,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/bank', bank);
 app.use('/testTool', testTool);
+app.use('/config', config);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

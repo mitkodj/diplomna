@@ -50,3 +50,8 @@ a {
 table th {
 	width: 150px;
 }
+
+input {
+	margin-left: 5px;
+	margin-right: 5px;
+}
