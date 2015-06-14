@@ -25,10 +25,14 @@ a {
 	background-color: yellow;
 }
 
-#testResultsTable th {
+table th {
 	background-color: gray;
 	border-width: 2px;
 	border-color: black;
+}
+
+table{
+	margin-bottom: 10px;
 }
 
 .redAlert {
