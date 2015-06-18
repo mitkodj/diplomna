@@ -13,7 +13,8 @@ router.post('/', function(req, res) {
   .then(function(rows) {
 
     if (rows == "Blind SQL Injection Anomaly Detected.") {
-    	users.saveUserIP(session.currentUser);
+      console.log(session.currentUser);
+    	// users.saveUserIP(session.currentUser);
     }
     res.send(rows);
   });

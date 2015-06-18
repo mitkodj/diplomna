@@ -21,7 +21,11 @@ var automata = [{
 		},{
 			t: 'f', s: 'f5'
 		},{
+			t: 'h', s: 'f5'
+		},{
 			t: 'i', s: 'f5'
+		},{
+			t: 'm', s: 'f5'
 		},{
 			t: 'n', s: 'f5'
 		},{
@@ -136,6 +140,8 @@ var automata = [{
 			t: 'f', s: 'f5'
 		},{
 			t: 'i', s: 'f5'
+		},{
+			t: 'm', s: 'f5'
 		},{
 			t: 'n', s: 'f5'
 		},{
@@ -303,9 +309,14 @@ function getStateByName(name){
 }
 
 function transition(term){
+	if (term == 'h') {
+		console.log(currentState, term, currentState.transitions);
+	}
 	for (var i = 0; i < currentState.transitions.length; i++) {
 		if (currentState.transitions[i].t == term) {
+
 			currentState = getStateByName(currentState.transitions[i].s);
+			console.log(currentState.name);
 			return true;
 		}
 	};

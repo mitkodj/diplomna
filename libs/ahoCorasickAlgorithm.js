@@ -51,6 +51,7 @@ function SPMA_test(query) {
 }
 
 function ACAlg(query) {
+    console.log(query);
 	var i = 0,
 		n = query.length,
 		returnedResult = -1;

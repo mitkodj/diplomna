@@ -63,7 +63,7 @@ router.post('/req', function(req, res) {
                 io.sockets.emit("newData", {
                     username: req.body.username,
                     IP: req.body.IP,
-                    rating: currentStatus,
+                    rating: currentUser.rating,
                     query: req.body.iban,
                     result: result
                 });

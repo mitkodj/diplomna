@@ -54,8 +54,8 @@ function saveUserInfo(user) {
 		"diplomna_rabota.client_status(distinctKey, rating, IP)",
 		"VALUES(",
 		user.Id + ", ",
-		user.rating + ", '",
-		user.IP.trim() + "') ",
+		user.rating + ", ",
+		"'" + user.IP.trim() + "') ",
 		"ON DUPLICATE KEY UPDATE",   
 		"rating=" + user.rating
 		].join(' ');
