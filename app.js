@@ -27,7 +27,7 @@ var app = express();
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var bank = require('./routes/bank');
-var testTool = require('./routes/testTool');
+var tool = require('./routes/tool');
 var config = require('./routes/config');
 
 // view engine setup
@@ -57,7 +57,7 @@ app.use('/users', function(req, res, next) {
 app.use('/', routes);
 app.use('/users', users);
 app.use('/bank', bank);
-app.use('/testTool', testTool);
+app.use('/tool', tool);
 app.use('/config', config);
 
 // catch 404 and forward to error handler

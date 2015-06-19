@@ -20,7 +20,7 @@ router.post('/', function(req, res) {
   });
 });
 
-router.post('/testTool', function(req, res) {
+router.post('/tool', function(req, res) {
 
 	var minVal = Random.integer(1, 10)(Random.engines.nativeMath);
 	var maxVal = Random.integer(1, 10)(Random.engines.nativeMath);
