@@ -1,0 +1,97 @@
+script(type='text/javascript' src='http://code.jquery.com/jquery.min.js')
+link(rel='stylesheet', href='/stylesheets/style.css')
+script(src='/socket.io/socket.io.js')
+script.
+	var socket = io("http://localhost:3010");
+	var dataCollection = [];
+	$(document).ready(function() {
+		$("input[name=patternButton]").click( function() {
+
+		var pattern = document.getElementById('pattern').value;
+		var fill = document.getElementById('fill').value;
+		console.log(pattern, fill);
+		$.ajax( {
+				type: "POST",
+				url: '/config/addPattern',
+				data: {
+					pattern: pattern
+				},
+				dataType : "json",
+				success: function( response ) {
+					var resultTable = document.getElementById('patternsResultsTable');
+					
+					resultTable.innerHTML = "<tr><th>Шаблон</th></tr>";
+
+					for(var i = 0; i< response.length; i++){
+						var tableRow = "",
+							td = "<td>";
+							tableRow += "<tr>" + td;
+							tableRow +=
+							response[i] + "</td></tr>";
+						$('#patternsResultsTable').append(tableRow);
+					}
+				},
+				error: function(err) {
+					console.log("ERRor");
+					var resultTable = document.getElementById('patternsResultsTable');
+					
+					resultTable.innerHTML = "<tr><th>Шаблон</th></tr>";
+					alert("SQL Injection");
+				}
+			});
+		} );
+		$("input[name=fillButton]").click( function() {
+
+		var fill = document.getElementById('fill').value;
+		$.ajax( {
+				type: "POST",
+				url: '/config/addFill',
+				data: {
+					fill: fill
+				},
+				dataType : "json",
+				success: function( response ) {
+					var resultTable = document.getElementById('fillsResultsTable');
+					
+					resultTable.innerHTML = "<tr><th>Име на процедура или променлива</th></tr>";
+
+					for(var i = 0; i< response.length; i++){
+						var tableRow = "",
+							td = "<td>";
+							tableRow += "<tr>" + td;
+							tableRow +=
+							response[i] + "</td></tr>";
+						$('#fillsResultsTable').append(tableRow);
+					}
+				},
+				error: function(err) {
+					console.log("ERRor");
+					var resultTable = document.getElementById('fillsResultsTable');
+					
+					resultTable.innerHTML = "<tr><th>Име на процедура или променлива</th></tr>";
+					alert("SQL Injection");
+				}
+			});
+		} );
+		})
+block content
+	h1 Добре дошли в конфигурационния модул
+	p Ако искате да добавите шаблон към колекцията, то можете да го направите чрез формата отдолу.
+	//- label(for='pattern') Шаблон
+	//- input(id="pattern", type="text", name="pattern")
+	//- input(type="button", name="patternButton", value="Add")
+	table(id="patternsResultsTable")
+		tr
+			th Шаблон
+		each val, index in patterns
+			tr
+				td= val
+	label(for='fill') Име на процедура или променлива
+	input(id="fill", type="text", name="fill")
+	input(type="button", name="fillButton", value="Добави")
+	table(id="fillsResultsTable")
+		tr
+			th Име на процедура или променлива
+		each val, index in fills
+			tr
+				td= val
