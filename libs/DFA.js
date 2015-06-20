@@ -309,14 +309,10 @@ function getStateByName(name){
 }
 
 function transition(term){
-	if (term == 'h') {
-		console.log(currentState, term, currentState.transitions);
-	}
 	for (var i = 0; i < currentState.transitions.length; i++) {
 		if (currentState.transitions[i].t == term) {
 
 			currentState = getStateByName(currentState.transitions[i].s);
-			console.log(currentState.name);
 			return true;
 		}
 	};

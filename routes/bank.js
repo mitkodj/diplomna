@@ -13,7 +13,12 @@ router.post('/', function(req, res) {
   .then(function(rows) {
 
     if (rows == "Blind SQL Injection Anomaly Detected.") {
-      console.log(session.currentUser);
+      console.log('Injection from ', session.currentUser);
+
+      console.log(req.body.test, !req.body.test);
+      if (!req.body.test) {
+        users.saveUserInfo(session.currentUser);
+      }
     	// users.saveUserIP(session.currentUser);
     }
     res.send(rows);
@@ -22,19 +27,6 @@ router.post('/', function(req, res) {
 
 router.post('/tool', function(req, res) {
 
-	var minVal = Random.integer(1, 10)(Random.engines.nativeMath);
-	var maxVal = Random.integer(1, 10)(Random.engines.nativeMath);
-
-	var requestQueries = [
-		123456789,
-		111111111,
-		414141414,
-		-111,
-		"1 OR 1=1",
-		"1 AND " + minVal + "=" + maxVal,
-		"1 UNION SELECT @@version, 1, 1",
-		"1 UNION SELECT version(), 1, 1",
-	];
   banks.getBankData(req.body.iban)
   .then(function(rows) {
 

@@ -39,7 +39,7 @@ router.post('/', function(req, res) {
           rows[index]);
         session.currentUser = rows[index];
       }
-      console.log(session.currentUser);
+      console.log(">>>>>)})})}})}", session.currentUser);
       var htmlOutput = {
         user: {
           name: rows[0].username
