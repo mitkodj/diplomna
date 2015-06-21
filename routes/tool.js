@@ -22,9 +22,7 @@ var tracked = false;
 io.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
   socket.on('my other event', function (data) {
-    console.log(data, ">>>", tracked);
     io.sockets.emit('message', data);
-  // console.log('a user connected');
   });
 });
 
@@ -39,19 +37,6 @@ router.get('/track', function(req, res) {
 });
 
 router.post('/req', function(req, res) {
-  // res.render('tool', { title: 'Express' });
-  console.log('1111', req.body);
-  // banks.getBankDataAsync(req.body.iban)
-  //   .then(function(result) {
-  //       // console.log(element.iban, result);
-  //       // if (result == "Blind SQL Injection Anomaly Detected.") {
-  //       //     currentStatus = 1;
-  //       // }
-  //       // console.log(element.iban, result);
-  //       if (result == "Blind SQL Injection Anomaly Detected.") {
-  //           currentStatus = 1;
-  //       }
-  //       // console.log(status);
 
         users.getUserData(req.body.username, req.body.password)
         .then(function(rows){
@@ -60,15 +45,12 @@ router.post('/req', function(req, res) {
 
             banks.getBankDataAsync(req.body.iban)
             .then(function(result) {
-                console.log(tracked, currentUser);
                 if (result == "Blind SQL Injection Anomaly Detected.") {
                     currentStatus = 1;
                     currentUser.rating = 1;
                 }
 
-                console.log(tracked);
                 if (tracked) {
-                    console.log("^^^", tracked);
                     io.sockets.emit("newData", {
                         username: req.body.username,
                         IP: req.body.IP,
@@ -88,7 +70,6 @@ router.post('/req', function(req, res) {
             });
         });
 
-    // });
   res.send(req.body);
 });
 
@@ -168,11 +149,8 @@ router.get('/test', function(req, res) {
     }
 
     var randomData = _.map(randomNumbers, function(element){
-        // return users[element];
         return JSON.parse(JSON.stringify(users[element]));
     });
-
-    // console.log(randomData);
 
     randomNumbers = [];
 
@@ -184,69 +162,39 @@ router.get('/test', function(req, res) {
         var ip = Random.integer(0, 2)(Random.engines.nativeMath);
 
         randomData[i].IP = IPs[ip];
-        // console.log(i,randomData[i].username, ip, randomData[i].IP);
     }
-
-    // console.log('=================');
-
-    // for (i=0; i<20;i++) {
-    //     console.log(i, randomData[i].username, randomData[i].IP);
-    // }
 
     var groupedCollection = _.groupBy(randomData, function(element){
         return element.username + element.IP;
     });
-    // console.log(groupedCollection);
-    console.log('=====111============');
-    // for (i=0; i<groupedCollection.length;i++) {
-    //     console.log(i, groupedCollection[i].length);
-    // }
-
+    
     async.map(groupedCollection, iteratorFunction,
      function (err, results) {
-        // console.log("Finished!");
-        // console.log(err,results);
+        
         var resArray = _.flatten(_.values(results));
         res.send(resArray);
     });
-
-    // async.each(groupedCollection, iteratorFunction,
-    //  function (err, results) {
-    //     // console.log(results);
-    //     res.send(results);
-    // });
-
-    // res.send(groupedCollection);
-    // res.send(randomData);
 });
 
 function itFunc(element, callback) {
     banks.getBankDataAsync(element.iban)
     .then(function(result) {
-        // console.log('----',element.iban, result);
         return callback(null, result);
     });
-    // return callback(undefined, 1);
 }
 
 function iteratorFunction(group, cb) {
     var results = [];
     var currentStatus = 0;
-    // console.log(group.length);
 
     async.mapSeries(group, function(element, callback) {
-            // console.log(element.iban);
             banks.getBankDataAsync(element.iban)
             .then(function(result) {
-                // console.log(element.iban, result);
-                // if (result == "Blind SQL Injection Anomaly Detected.") {
-                //     currentStatus = 1;
-                // }
-                // console.log(element.iban, result);
+                
                 if (result == "Blind SQL Injection Anomaly Detected.") {
                     currentStatus = 1;
                 }
-                // console.log(status);
+
                 callback(null, {
                     username: element.username,
                     IP: element.IP,
@@ -256,7 +204,6 @@ function iteratorFunction(group, cb) {
                 });
             });
         }, function (err, resultGroup) {
-            // console.log('>>>', err, resultGroup);
             cb(err, resultGroup);
         });
 }
@@ -265,12 +212,10 @@ function iterateUntil(array, results, i){
   // This line would eventually resolve the promise with something matching
   // the final ending condition.
   var element = array[i];
-  console.log(element.iban);
   return 
     banks.getBankData(element.iban)
     .then(function(result) {
 
-        console.log(result);
         results.push(result);
       // If the promise was resolved with the loop end condition then you just
       // return the value or something, which will resolve the promise.

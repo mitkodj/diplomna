@@ -14,8 +14,6 @@ function getUserData(username, password) {
 	"AND password='" + password + "'"
 	].join(' ');
 
-	console.log(query);
-
 	connection.query(query, function(err, rows, fields) {
 		if (err) def.reject(err);
 
@@ -37,8 +35,6 @@ function getUserDataByIP(username, password, IP) {
 	"AND IP ='" + IP + "'"
 	].join(' ');
 
-	console.log(query);
-
 	connection.query(query, function(err, rows, fields) {
 		if (err) def.reject(err);
 
@@ -49,7 +45,6 @@ function getUserDataByIP(username, password, IP) {
 }
 
 function saveUserInfo(user) {
-	console.log("in saveUserIP", user);
 	var query = ["INSERT INTO",
 		"diplomna_rabota.client_status(distinctKey, rating, IP)",
 		"VALUES(",
@@ -59,7 +54,6 @@ function saveUserInfo(user) {
 		"ON DUPLICATE KEY UPDATE",   
 		"rating=" + user.rating
 		].join(' ');
-		console.log(query);
 
 	connection.query(query, function(err, rows, fields) {
 		if (err) throw err;
@@ -67,10 +61,6 @@ function saveUserInfo(user) {
 		console.log(rows);
 	});
 }
-
-// function SPMA(query, SML) {
-// 	return acAlg.SPMA(query, SML);
-// }
 
 module.exports = {
 	    getUserData: getUserData,

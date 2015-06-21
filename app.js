@@ -4,25 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-// var log4js = require('log4js'); 
-// log4js.loadAppender('file');
-// log4js.addAppender(log4js.appenders.file('logs/requests.log'), 'requests');
-// var loggerReq = log4js.getLogger('requests');
-// loggerReq.setLevel('ERROR');
-// var log4js = require('log4js');
-// log4js.configure({
-//   appenders: [
-//     { type: 'console' },
-//     { type: 'file', filename: 'logs/cheese.log', category: 'cheese' }
-//   ]
-// });
-// var logger = log4js.getLogger('cheese');
-// logger.setLevel('ERROR');
 
 var app = express();
-
-// var server = app.listen(3010);
-// var io = require('socket.io').listen(server);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -34,25 +17,18 @@ var config = require('./routes/config');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
-// app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // a middleware sub-stack which prints request info for any type of HTTP request to /user/:id
-app.use('/users', function(req, res, next) {
-  // console.log(loggerReq, loggerReq.trace);
-  // logger.trace('Cheese is Gouda.');
-  req.userInfo = {
-    status: 200
-  };
-  // console.log('Request: ', req.connection.remoteAddress);
-  // console.log('User INFO: ', req.userInfo);
-  next();
-});
+// app.use('/users', function(req, res, next) {
+//   req.userInfo = {
+//     status: 200
+//   };
+//   next();
+// });
 
 app.use('/', routes);
 app.use('/users', users);
@@ -109,16 +85,6 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
-// io.on('connection', function (socket) {
-//     console.log("socket");
-//   socket.emit('news', { hello: 'world' });
-//   socket.on('my other event', function (data) {
-//     console.log(data);
-//     io.sockets.emit('message', data);
-//   // console.log('a user connected');
-//   });
-// });
 
 
 module.exports = app;

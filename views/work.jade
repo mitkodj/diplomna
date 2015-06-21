@@ -13,9 +13,8 @@ script.
 				success: function( response ) {
 					var resultTable = document.getElementById('resultsTable');
 					
-					resultsTable.innerHTML = "<tr><th>Bank</th><th>IBAN</th><th>Withdraw</th></tr>";
+					resultsTable.innerHTML = "<tr><th>Банка</th><th>IBAN</th><th>Изтегляне</th></tr>";
 
-					console.log(response, typeof response);
 					for(var i = 0; i< response.length; i++){
 		                var tableRow = "<tr><td>" +
 		                 response[i].bankName +
@@ -30,28 +29,23 @@ script.
 		        	console.log("ERRor");
 		       		var resultTable = document.getElementById('resultsTable');
 					
-					resultsTable.innerHTML = "<tr><th>Bank</th><th>IBAN</th><th>Withdraw</th></tr>";
+					resultsTable.innerHTML = "<tr><th>Банка</th><th>IBAN</th><th>Изтегляне</th></tr>";
 		        	alert("SQL Injection");
 		        }
 			});
 		} );
 
 		$("input[type=button]").click( function() {
-			window.location.assign("/testTool");
+			window.location.assign("/tool");
 		} );
 		return false;
 	});
 div(name="IBANSearch", method="post")
 	input(type="text", name="iban")
-	input(type="submit", value="SEARCH")
-	input(type="button", value="TEST TOOL")
+	input(type="submit", value="Търсене")
+	input(type="button", value="Инструмент")
 table(id="resultsTable")
 	tr
-		th Bank
+		th Банка
 		th IBAN
-		th Withdraw
-	//- each val, index in ['zero', 'one', 'two']
-	//- 	tr
-	//- 		td= val
-	//- 		td= index
-	//- 		td 1
+		th Изтегляне

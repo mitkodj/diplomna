@@ -9,7 +9,6 @@ script.
 
 		var pattern = document.getElementById('pattern').value;
 		var fill = document.getElementById('fill').value;
-		console.log(pattern, fill);
 		$.ajax( {
 				type: "POST",
 				url: '/config/addPattern',
@@ -77,9 +76,6 @@ script.
 block content
 	h1 Добре дошли в конфигурационния модул
 	p Ако искате да добавите шаблон към колекцията, то можете да го направите чрез формата отдолу.
-	//- label(for='pattern') Шаблон
-	//- input(id="pattern", type="text", name="pattern")
-	//- input(type="button", name="patternButton", value="Add")
 	table(id="patternsResultsTable")
 		tr
 			th Шаблон

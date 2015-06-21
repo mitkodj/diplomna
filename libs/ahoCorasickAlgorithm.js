@@ -10,11 +10,9 @@ function SPMA(query) {
 	var j = 0;
     var i = query.indexOf('WHERE');
     var currentQuery = query.substring(i + 5);
-    // console.log(currentQuery);
     var checkResult = ACAlg(currentQuery);
      if (checkResult > -1) {
          session.currentUser.rating = 1;
-         // console.log(session.currentUser);
          currentQuery = currentQuery.substring(checkResult);
      } else {
          currentQuery = currentQuery.substring(1);
@@ -33,16 +31,10 @@ function SPMA_test(query) {
     var i = query.indexOf('WHERE');
     var currentQuery = query.substring(i + 5);
     var rating = 0;
-    // console.log(currentQuery);
     var checkResult = ACAlg(currentQuery);
-     if (checkResult > -1) {
-         rating = 1;
-         // console.log(session.currentUser);
-         // currentQuery = currentQuery.substring(checkResult);
-     } 
-     // else {
-     //     currentQuery = currentQuery.substring(1);
-     // }
+    if (checkResult > -1) {
+        rating = 1;
+    }
     if (rating > 0) {
         return true;
     } else {
@@ -51,11 +43,9 @@ function SPMA_test(query) {
 }
 
 function ACAlg(query) {
-    console.log(query);
 	var i = 0,
 		n = query.length,
 		returnedResult = -1;
-    // console.log(query, n);
 	for (; i < n; i++) {
 		while (i < n && !(DFA.transition(query.charAt(i)))) {
 			DFA.reset();

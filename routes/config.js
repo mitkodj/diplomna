@@ -22,15 +22,6 @@ router.get('/', function(req, res) {
 			patterns: patternResults,
 			fills: fillResults
 		};
-	// console.log(results)	;
-	// 	var patternResults = _.map(results, function(element) {
-	// 		console.log(element.pattern);
-	// 		return element.pattern;
-	// 	});
-	// 	var fillResults = _.map(results, function(element) {
-	// 		console.log(element.fill_text);
-	// 		return element.fill_text;
-	// 	});
 
   		res.render('config', interfaceRes);
 	})
