@@ -58,7 +58,7 @@ function saveUserInfo(user) {
 	connection.query(query, function(err, rows, fields) {
 		if (err) throw err;
 
-		console.log(rows);
+		// console.log(rows);
 	});
 }
 

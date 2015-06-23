@@ -20,7 +20,6 @@ function getBankData(iban) {
 	if (result) {
 		session.currentUser.rating = 1;
 	}
-	console.log(result);
 
 	if (!result) {
 		connection.query(query, function(err, rows, fields) {
@@ -48,7 +47,6 @@ function getBankDataAsync(iban, callback) {
 	"WHERE I.IBAN = " + iban
 	].join(' ');
 
-	console.log(query);
 	var result = SPMA_test(query);
 
 	if (!result) {

@@ -15,7 +15,6 @@ router.post('/', function(req, res) {
     if (rows == "Blind SQL Injection Anomaly Detected.") {
       console.log('Injection from ', session.currentUser);
 
-      console.log(req.body.test, !req.body.test);
       if (!req.body.test) {
         users.saveUserInfo(session.currentUser);
       }
