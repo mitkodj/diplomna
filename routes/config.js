@@ -39,6 +39,8 @@ router.post('/addPattern', function(req, res) {
 
 router.post('/addFill', function(req, res) {
 
+	console.log(req.body);
+
 	patterns.addPattern(null, req.body.fill)
 	.then(function(results) {
 

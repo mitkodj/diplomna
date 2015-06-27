@@ -29,6 +29,7 @@ script.
 							response[i] + "</td></tr>";
 						$('#patternsResultsTable').append(tableRow);
 					}
+					document.getElementById('fill').value = '';
 				},
 				error: function(err) {
 					console.log("ERRor");
@@ -62,6 +63,7 @@ script.
 							response[i] + "</td></tr>";
 						$('#fillsResultsTable').append(tableRow);
 					}
+					document.getElementById('fill').value = '';
 				},
 				error: function(err) {
 					console.log("ERRor");

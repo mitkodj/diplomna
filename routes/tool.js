@@ -38,19 +38,26 @@ router.get('/track', function(req, res) {
 
 router.post('/req', function(req, res) {
 
-        users.getUserData(req.body.username, req.body.password)
+        users.getUserDataByIP(req.body.username, req.body.password, req.body.IP)
         .then(function(rows){
             var currentUser = rows[0],
                 currentStatus = 0;
 
             banks.getBankDataAsync(req.body.iban)
             .then(function(result) {
+                console.log('CU: ??? ', currentUser);
                 if (result == "Blind SQL Injection Anomaly Detected.") {
                     currentStatus = 1;
                     currentUser.rating = 1;
+                    console.log('CU: <<< ', currentUser);
                 }
 
                 if (tracked) {
+                    console.log({
+                        username: req.body.username,
+                        IP: req.body.IP,
+                        rating: currentUser.rating
+                    });
                     io.sockets.emit("newData", {
                         username: req.body.username,
                         IP: req.body.IP,
