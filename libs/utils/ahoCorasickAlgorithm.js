@@ -6,11 +6,12 @@ var DFA = require('./DFA');
 var session = require('./session');
 
 function SPMA(query) {
-	DFA.reset();
 	var j = 0;
     var i = query.indexOf('WHERE');
     var currentQuery = query.substring(i + 5);
     var checkResult = ACAlg(currentQuery);
+    DFA.reset();
+
      if (checkResult > -1) {
          session.currentUser.rating = 1;
          currentQuery = currentQuery.substring(checkResult);
@@ -32,6 +33,7 @@ function SPMA_test(query) {
     var currentQuery = query.substring(i + 5);
     var rating = 0;
     var checkResult = ACAlg(currentQuery);
+
     if (checkResult > -1) {
         rating = 1;
     }
@@ -46,6 +48,7 @@ function ACAlg(query) {
 	var i = 0,
 		n = query.length,
 		returnedResult = -1;
+
 	for (; i < n; i++) {
 		while (i < n && !(DFA.transition(query.charAt(i)))) {
 			DFA.reset();

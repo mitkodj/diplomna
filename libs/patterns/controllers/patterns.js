@@ -1,14 +1,14 @@
-var express = require('express');
+var interfaceRes = {};
 var _ = require('lodash');
-var router = express.Router();
 
-var patterns = require('../libs/patterns');
-var interfaceRes = [];
+function patternsController(repository) {
 
-/* GET users listing. */
-router.get('/', function(req, res) {
+	this.repository = repository;
+}
 
-	patterns.getPatterns()
+patternsController.prototype.getPatterns = function(req, res) {
+
+	this.repository.getPatterns()
 	.then(function(results) {
 
 		var patternResults = _.map(results.patterns, function(element) {
@@ -25,9 +25,9 @@ router.get('/', function(req, res) {
 
   		res.render('config', interfaceRes);
 	})
-});
+};
 
-router.post('/addPattern', function(req, res) {
+patternsController.prototype.addPattern = function(req, res) {
 
 	patterns.addPattern(req.body.pattern, null)
 	.then(function(results) {
@@ -35,11 +35,9 @@ router.post('/addPattern', function(req, res) {
 		interfaceRes.patterns.push(req.body.pattern);
   		res.send(interfaceRes.patterns);
 	})
-});
+};
 
-router.post('/addFill', function(req, res) {
-
-	console.log(req.body);
+patternsController.prototype.addFillValue = function(req, res) {
 
 	patterns.addPattern(null, req.body.fill)
 	.then(function(results) {
@@ -47,6 +45,8 @@ router.post('/addFill', function(req, res) {
 		interfaceRes.fills.push(req.body.fill)
   		res.send(interfaceRes.fills);
 	})
-})
+};
 
-module.exports = router;
+module.exports = function(repository) {
+  return new patternsController(repository);
+};

@@ -425,6 +425,7 @@ var finalStates = ['f4', 'f7', 'f10'];
 var currentState = automata[0];
 
 function getStateByName(name){
+
 	for (var i = automata.length - 1; i >= 0; i--) {
 		if (automata[i].name == name) {
 			return automata[i];
@@ -435,6 +436,7 @@ function getStateByName(name){
 }
 
 function transition(term){
+	
 	for (var i = 0; i < currentState.transitions.length; i++) {
 		if (currentState.transitions[i].t == term) {
 

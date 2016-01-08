@@ -1,18 +1,15 @@
-var express = require('express');
-var router = express.Router();
+var Q = require('Q');
+var acAlg = require('../../utils/ahoCorasickAlgorithm');
+var session = require('../../utils/session');
 var log4js = require('log4js');
 var jade = require('jade');
 
-var session = require('../libs/session');
-var banks = require('../libs/bank');
-var users = require('../libs/users');
-router.get('/', function(req, res) {
-  var result = users.acAlgCall("rsdvg1=1erbs", ["1=1"]);
-  res.send(result);
-});
+function usersController(repository) {
 
-/* POST users listing. */
-router.post('/', function(req, res) {
+	this.repository = repository;
+}
+
+usersController.prototype.setUserData = function(req, res) {
   users.getUserData(req.body.user,req.body.pass)
   .then(function(rows) {
     if (rows.length >= 1){
@@ -41,14 +38,15 @@ router.post('/', function(req, res) {
       res.render('index', { title: 'Express' });
     }
   });
-});
+};
 
-/* GET users listing. */
-router.get('/getUserData', function(req, res) {
+usersController.prototype.getUserData = function(req, res) {
   users.getUserData(1)
   .then(function(rows) {
 	  res.send(rows);
   });
-});
+}
 
-module.exports = router;
+module.exports = function (repository){
+	return new usersController(repository);
+};

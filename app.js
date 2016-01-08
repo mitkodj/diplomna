@@ -8,10 +8,10 @@ var bodyParser = require('body-parser');
 var app = express();
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
-var bank = require('./routes/bank');
-var tool = require('./routes/tool');
-var config = require('./routes/config');
+var users = require('./libs/users');
+var bank = require('./libs/banks');
+var config = require('./libs/patterns');
+// var tool = require('./routes/tool');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,18 +22,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// a middleware sub-stack which prints request info for any type of HTTP request to /user/:id
-// app.use('/users', function(req, res, next) {
-//   req.userInfo = {
-//     status: 200
-//   };
-//   next();
-// });
-
 app.use('/', routes);
 app.use('/users', users);
 app.use('/bank', bank);
-app.use('/tool', tool);
 app.use('/config', config);
 
 // catch 404 and forward to error handler

@@ -1,5 +1,5 @@
 var mysql = require('mysql');
-var config = require('../config/config');
+var config = require('../../config/config');
 
 var connection = mysql.createConnection({
   host     : 'localhost',
@@ -7,6 +7,5 @@ var connection = mysql.createConnection({
 });
 
 module.exports = function() {
-	// console.log(connection);
 	return connection;
 }
