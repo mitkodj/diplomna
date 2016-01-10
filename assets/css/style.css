@@ -1,0 +1,61 @@
+/*body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}*/
+
+a {
+  color: #00B7FF;
+}
+
+.spannable {
+	width:100%;
+	height:100%;
+}
+
+.loginbox {
+	width: 200px;
+}
+
+.loginbox > * {
+	width: 100%;
+	margin-bottom: 10px;
+}
+
+#resultsTable th {
+	background-color: yellow;
+}
+
+table th {
+	background-color: gray;
+	border-width: 2px;
+	border-color: black;
+}
+
+table{
+	margin-bottom: 10px;
+}
+
+.redAlert {
+	background-color: red;
+	color: white;
+}
+.yellowAlert {
+	background-color: yellow;
+}
+.greenAlert {
+	background-color: white;
+	color: black;
+}
+/*
+#resultsTable th {
+	background-color: yellow;
+}*/
+
+table th {
+	width: 150px;
+}
+
+input {
+	margin-left: 5px;
+	margin-right: 5px;
+}
