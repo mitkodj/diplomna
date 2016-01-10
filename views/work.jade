@@ -30,7 +30,7 @@ script.
 		       		var resultTable = document.getElementById('resultsTable');
 					
 					resultsTable.innerHTML = "<tr><th>Банка</th><th>IBAN</th><th>Изтегляне</th></tr>";
-		        	alert("SQL Injection");
+		        	alert("Blind SQL Injection detected!");
 		        }
 			});
 		} );
@@ -41,6 +41,7 @@ script.
 		return false;
 	});
 div(name="IBANSearch", method="post")
+	label(for='iban') IBAN:
 	input(type="text", name="iban")
 	input(type="submit", value="Търсене")
 	input(type="button", value="Инструмент")

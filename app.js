@@ -20,7 +20,7 @@ app.set('view engine', 'jade');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'views')));
 
 // a middleware sub-stack which prints request info for any type of HTTP request to /user/:id
 // app.use('/users', function(req, res, next) {
@@ -31,7 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // });
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/welcome', users);
 app.use('/bank', bank);
 app.use('/tool', tool);
 app.use('/config', config);
