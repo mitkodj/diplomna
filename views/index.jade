@@ -1,12 +1,13 @@
 head
 	|<style type="text/css">
 	include ./../public/stylesheets/style.css
+	include ./../public/stylesheets/bootstrap.min.css
 	|</style>
-if user
-	include ./work.jade
-else
-	div(class="loginbox")
-		form(name="login", action="/users", method="post")
-			input(type="text", name="user")
-			input(type="password", name="pass")
-			input(type="submit", value="Вписване")
+body
+	script(src='./utils/jquery-1.11.3.js')
+	script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js')
+	if user
+		include ./work.jade
+	else
+		include ./views/login.html
+		script(src='./controllers/login.js')
