@@ -1,21 +1,20 @@
-<div class = "loginbox">
-<h3>Sign In</h3>
-<p>In order to use the system you have to sign in.</p>
+<div class = "loginbox module">
+<!-- <h3>Sign In</h3>
+<p>In order to use the system you have to sign in.</p> -->
 <form name="login" class="login" action="/" method="post">
-	<div class="row loginform">
-		<div class="span5">
-			<div class="span2">
-				<label for="user" >Username</label>
-				<input type="text" name="user" required/>
-			</div>
-			<div class="span2">
-				<label for="pass">Password</label>
-				<input type="password" name="pass" required/>
-			</div>
-			<div class="span1">
-				<input type="submit" name="loginBtn" class="loginBtn" value="Sign In" />
-			</div>
-		</div>
-	</div>
+	<fieldset class="clearfix">
+		
+		<p>
+			<span class="fontawesome-user"></span>
+			<input type="text" name="user" value="Username" required/>
+		</p>
+		<p>
+			<span class="fontawesome-lock"></span>
+			<input type="password" name="pass" value="Password" required/>
+		</p>
+		<p>
+			<input type="submit" name="loginBtn" class="loginBtn" value="Sign In" />
+		</p>
+	</fieldset>
 </form>
 </div>
